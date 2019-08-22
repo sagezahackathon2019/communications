@@ -20,6 +20,11 @@ namespace Communications.API.Controllers
             return View();
         }
 
+        public IActionResult HangfireDashboard()
+        {
+            return Redirect("/hangfire");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
