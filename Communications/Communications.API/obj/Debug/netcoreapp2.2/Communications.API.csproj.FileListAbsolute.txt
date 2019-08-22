@@ -21,3 +21,10 @@ E:\Development\hackathon2019\communications\Communications\Communications.API\ob
 E:\Development\hackathon2019\communications\Communications\Communications.API\obj\Debug\netcoreapp2.2\Razor\Views\_ViewStart.g.cshtml.cs
 E:\Development\hackathon2019\communications\Communications\Communications.API\obj\Debug\netcoreapp2.2\Communications.API.RazorTargetAssemblyInfo.cache
 E:\Development\hackathon2019\communications\Communications\Communications.API\obj\Debug\netcoreapp2.2\Communications.API.RazorTargetAssemblyInfo.cs
+E:\Development\hackathon2019\communications\Communications\Communications.API\bin\Debug\netcoreapp2.2\Communications.API.pdb
+E:\Development\hackathon2019\communications\Communications\Communications.API\bin\Debug\netcoreapp2.2\Communications.API.Views.dll
+E:\Development\hackathon2019\communications\Communications\Communications.API\bin\Debug\netcoreapp2.2\Communications.API.Views.pdb
+E:\Development\hackathon2019\communications\Communications\Communications.API\obj\Debug\netcoreapp2.2\Communications.API.Views.pdb
+E:\Development\hackathon2019\communications\Communications\Communications.API\obj\Debug\netcoreapp2.2\Communications.API.dll
+E:\Development\hackathon2019\communications\Communications\Communications.API\obj\Debug\netcoreapp2.2\Communications.API.pdb
+E:\Development\hackathon2019\communications\Communications\Communications.API\obj\Debug\netcoreapp2.2\Communications.API.csproj.CopyComplete
