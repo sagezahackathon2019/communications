@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MailKit;
 using MimeKit;
+using Hangfire;
 
 namespace Communications.API.Helpers
 {
@@ -44,6 +45,7 @@ namespace Communications.API.Helpers
             }
         }
 
+        [JobDisplayName("Sending Email")]
         private void SendEmail(MailTask mailTask)
         {
             var message = new MimeMessage();
