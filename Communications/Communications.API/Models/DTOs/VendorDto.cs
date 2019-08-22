@@ -7,7 +7,7 @@
 
     public class VendorDto
     {
-        public Guid ID { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string DefaultFromAddress { get; set; }
         public string Name { get; set; }
     }
