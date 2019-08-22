@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Communications.API.Data;
 using Communications.API.Helpers;
 using Hangfire;
-using Hangfire.MemoryStorage;
+//using Hangfire.MemoryStorage;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -36,7 +37,22 @@ namespace Communications.API
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddHangfire(x => x.UseMemoryStorage());
+            //string connectionString = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=HackathonApi;Trusted_Connection=True;";
+            var connectionString = Configuration.GetConnectionString("PrimaryConnection");
+
+            services.AddHangfire(configuration => configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(connectionString, new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    UsePageLocksOnDequeue = true,
+                    DisableGlobalLocks = true
+                }));
 
             //add hangfire server 1
             services.AddHangfireServer(x => x.ServerName = "Server 1");
@@ -48,8 +64,7 @@ namespace Communications.API
             services.AddHangfireServer(x => x.ServerName = "Server 3");
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            string connectionString = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=HackathonApi;Trusted_Connection=True;";
+            
 
             services.AddDbContext<MainDbContext>(options => {
                 options.UseSqlServer(connectionString);
