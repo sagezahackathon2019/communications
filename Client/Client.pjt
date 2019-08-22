@@ -1,0 +1,156 @@
+; CASEMaker AcuBench Workspace File, Version 10.0
+; WARNING: DO NOT MODIFY THIS FILE!
+
+[WORKSPACE_CONTENT]
+PROJECT_LIST=Client
+CONFIGURATION_LIST=Debug Mode,Release Mode
+CURRENT_CONFIGURATION=Debug Mode
+
+[PROJECT_CONTENT-Client]
+RELATIVE_PATH=.
+REMOTE_PATH=myserver:5632:/
+MAIN_PROGRAM_TYPE=2
+REMOTE_SERVER_NAME=myserver
+REMOTE_SERVER_PORT=5632
+REMOTE_SERVER_DIR=/
+
+[PROGRAM_CONTENT-Client:PROGRAM1]
+RELATIVE_PATH=Program1.psf
+
+[FOLDER_CONTENT-Client:Source]
+ACCEPTED_FILE_EXTENSION=*.cbl;*.cob
+CREATED_TIME=07:33:45, Thursday, 22 August 2019
+
+[FOLDER_CONTENT-Client:Screen]
+ACCEPTED_FILE_EXTENSION=*.scr;*.stf
+CREATED_TIME=07:33:45, Thursday, 22 August 2019
+
+[FOLDER_CONTENT-Client:Report]
+ACCEPTED_FILE_EXTENSION=*.rpt;*.rtf
+CREATED_TIME=07:33:45, Thursday, 22 August 2019
+
+[FOLDER_CONTENT-Client:Copylib]
+ACCEPTED_FILE_EXTENSION=*.cpy;*.wrk;*.lnk;*.lks;*.mnu;*.prd;*.evt;*.def
+CREATED_TIME=07:33:45, Thursday, 22 August 2019
+
+[FOLDER_CONTENT-Client:Object]
+ACCEPTED_FILE_EXTENSION=*.acu;*.cbx;*.obj;*.lib
+CREATED_TIME=07:33:45, Thursday, 22 August 2019
+
+[FOLDER_CONTENT-Client:List]
+ACCEPTED_FILE_EXTENSION=*.lst;*.log;*.asq
+CREATED_TIME=07:33:45, Thursday, 22 August 2019
+
+[FOLDER_CONTENT-Client:Resource]
+ACCEPTED_FILE_EXTENSION=*.ico;*.bmp;*.jpg;*.jpe;*.jpeg
+CREATED_TIME=07:33:45, Thursday, 22 August 2019
+
+[FOLDER_CONTENT-Client:FD]
+ACCEPTED_FILE_EXTENSION=*.fd;*.sd;*.sl
+CREATED_TIME=07:33:45, Thursday, 22 August 2019
+
+[FOLDER_CONTENT-Client:Remote]
+ACCEPTED_FILE_EXTENSION=*.acu;*.cbx;*.obj;*.lib
+CREATED_TIME=07:33:45, Thursday, 22 August 2019
+
+[PROJECT_COMPILE_SETTING-Client:Debug Mode]
+; Standard Options
+NAME_OBJECT_FILE=.\object\@.acu
+NAME_ERROR_FILE=@.err
+MAX_ERROR_COUNT_NUM=100
+REMOTE_SERVER_NAME=myserver
+REMOTE_SERVER_PORT=5632
+REMOTE_SERVER_DIR=/
+REMOTE_OBJECT_FILE=@.acu
+; Listing Options
+NAME_LISTING_FILE=.\list\@.lst
+; Compatibility Options
+COMPATIBILITY_VERSION=19
+; File Options
+XFD_FILE_VERSION=0
+; Source Options
+; ReservedWord Options
+; DataStorage Options
+ALIGNMENT_DATA_BOUNDARY=4
+SYNC_BOUNDARY_LIMIT_NUMBER=4
+; Video Options
+; Mapping Options
+; Precompiler Options
+NAME_PRECOMPILE_OUTPUT_FILE=.\list\@.asq
+; Native Code Options
+; Debugger Options
+INCLUDE_ALL_INFO=1
+; Interop Options
+; Miscellaneous Options
+DEBUGGING=1
+CODE_VERSION_NUMBER=19
+
+[PROJECT_RUNTIME_SETTING-Client:Debug Mode]
+; Common Options
+NAME_CONFIGURATION_FILE=\etc\cblconfi
+; Io Options
+; Debug Options
+; ThinClient Options
+REMOTE_CONFIG_NAME=myserver:5632:/etc/cblconfig
+REMOTE_CONFIG_DEBUG_PORT=5632
+
+[PROJECT_ENVIRONMENT_SETTING-Client:Debug Mode]
+VARIABLE0=RUNNAME,Wrun32.exe
+VARIABLE1=COMPILERNAME,Ccbl32.exe
+VARIABLE2=CODE_PREFIX,.\object
+VARIABLE3=ACUPATH,%acudir%\bin
+VARIABLE4=COPYPATH,.\screen;.\copylib;.\report;.\resource;.\fd;%acudir%\sample\def
+VARIABLE5=THINNAME,AcuThin.exe
+
+[PROJECT_LIBRARY_SETTING-Client:Debug Mode]
+NAME_LIBRARY_FILE=.\object\@.lib
+
+[PROJECT_COMPILE_SETTING-Client:Release Mode]
+; Standard Options
+NAME_OBJECT_FILE=.\object\@.acu
+NAME_ERROR_FILE=@.err
+MAX_ERROR_COUNT_NUM=100
+REMOTE_SERVER_NAME=myserver
+REMOTE_SERVER_PORT=5632
+REMOTE_SERVER_DIR=/
+REMOTE_OBJECT_FILE=@.acu
+; Listing Options
+NAME_LISTING_FILE=.\list\@.lst
+; Compatibility Options
+COMPATIBILITY_VERSION=19
+; File Options
+XFD_FILE_VERSION=0
+; Source Options
+; ReservedWord Options
+; DataStorage Options
+ALIGNMENT_DATA_BOUNDARY=4
+SYNC_BOUNDARY_LIMIT_NUMBER=4
+; Video Options
+; Mapping Options
+; Precompiler Options
+NAME_PRECOMPILE_OUTPUT_FILE=.\list\@.asq
+; Native Code Options
+; Debugger Options
+; Interop Options
+; Miscellaneous Options
+CODE_VERSION_NUMBER=19
+
+[PROJECT_RUNTIME_SETTING-Client:Release Mode]
+; Common Options
+NAME_CONFIGURATION_FILE=\etc\cblconfi
+; Io Options
+; Debug Options
+; ThinClient Options
+REMOTE_CONFIG_NAME=myserver:5632:/etc/cblconfig
+REMOTE_CONFIG_DEBUG_PORT=5632
+
+[PROJECT_ENVIRONMENT_SETTING-Client:Release Mode]
+VARIABLE0=RUNNAME,Wrun32.exe
+VARIABLE1=COMPILERNAME,Ccbl32.exe
+VARIABLE2=CODE_PREFIX,.\object
+VARIABLE3=ACUPATH,%acudir%\bin
+VARIABLE4=COPYPATH,.\screen;.\copylib;.\report;.\resource;.\fd;%acudir%\sample\def
+VARIABLE5=THINNAME,AcuThin.exe
+
+[PROJECT_LIBRARY_SETTING-Client:Release Mode]
+NAME_LIBRARY_FILE=.\object\@.lib
