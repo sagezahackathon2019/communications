@@ -31,7 +31,6 @@
        77 Arial9
                   USAGE IS HANDLE OF FONT VALUE NULL.
        77 Scr-To           PIC  X(500).
-       77 ScrSubject       PIC  X(500).
        77 Scr-Body         PIC  X(1000).
        01 .
            03 Scr-Report-Item  PIC  X(10000).
@@ -47,3 +46,4 @@
                   USAGE IS HANDLE OF FONT VALUE NULL.
        77 MLSTAT           PIC  X(2).
            88 Valid-MAILLIST VALUE IS "00" THRU "09". 
+       77 Scr-Subject      PIC  X(500).

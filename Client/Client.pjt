@@ -15,7 +15,10 @@ REMOTE_SERVER_PORT=5632
 REMOTE_SERVER_DIR=/
 
 [PROGRAM_CONTENT-Client:PROGRAM1]
-RELATIVE_PATH=Program1.psf
+RELATIVE_PATH=SendMail.psf
+
+[DATALAYOUT_CONTENT-Client:DATALAYOUT1]
+RELATIVE_PATH=FD\MAILLIST.dlt
 
 [FOLDER_CONTENT-Client:Source]
 ACCEPTED_FILE_EXTENSION=*.cbl;*.cob
@@ -53,6 +56,106 @@ CREATED_TIME=07:33:45, Thursday, 22 August 2019
 ACCEPTED_FILE_EXTENSION=*.acu;*.cbx;*.obj;*.lib
 CREATED_TIME=07:33:45, Thursday, 22 August 2019
 
+[FILE_CONTENT-Client:FILE1]
+RELATIVE_PATH=Source\SendMail.cbl
+FOLDER_NAME=Source
+OWNER_PATH=SendMail.psf
+ATTRIBUTE=0
+
+[FILE_CONTENT-Client:FILE2]
+RELATIVE_PATH=Screen\SendMail.scr
+FOLDER_NAME=Screen
+OWNER_PATH=SendMail.psf
+ATTRIBUTE=0
+
+[FILE_CONTENT-Client:FILE3]
+RELATIVE_PATH=Report\SendMail.rpt
+FOLDER_NAME=Report
+OWNER_PATH=SendMail.psf
+ATTRIBUTE=0
+
+[FILE_CONTENT-Client:FILE4]
+RELATIVE_PATH=Copylib\SendMail.wrk
+FOLDER_NAME=Copylib
+OWNER_PATH=SendMail.psf
+ATTRIBUTE=0
+
+[FILE_CONTENT-Client:FILE5]
+RELATIVE_PATH=Copylib\SendMail.prd
+FOLDER_NAME=Copylib
+OWNER_PATH=SendMail.psf
+ATTRIBUTE=0
+
+[FILE_CONTENT-Client:FILE6]
+RELATIVE_PATH=Copylib\SendMail.mnu
+FOLDER_NAME=Copylib
+OWNER_PATH=SendMail.psf
+ATTRIBUTE=0
+
+[FILE_CONTENT-Client:FILE7]
+RELATIVE_PATH=Copylib\SendMail.evt
+FOLDER_NAME=Copylib
+OWNER_PATH=SendMail.psf
+ATTRIBUTE=0
+
+[FILE_CONTENT-Client:FILE8]
+RELATIVE_PATH=Copylib\SendMail.lks
+FOLDER_NAME=Copylib
+OWNER_PATH=SendMail.psf
+ATTRIBUTE=0
+
+[FILE_CONTENT-Client:FILE9]
+RELATIVE_PATH=\Program Files (x86)\Micro Focus\extend 10.0.1\AcuGT\sample\def\acugui.def
+FOLDER_NAME=Copylib
+OWNER_PATH=Source\SendMail.cbl
+
+[FILE_CONTENT-Client:FILE10]
+RELATIVE_PATH=\Program Files (x86)\Micro Focus\extend 10.0.1\AcuGT\sample\def\acucobol.def
+FOLDER_NAME=Copylib
+OWNER_PATH=Source\SendMail.cbl
+
+[FILE_CONTENT-Client:FILE11]
+RELATIVE_PATH=\Program Files (x86)\Micro Focus\extend 10.0.1\AcuGT\sample\def\crtvars.def
+FOLDER_NAME=Copylib
+OWNER_PATH=Source\SendMail.cbl
+
+[FILE_CONTENT-Client:FILE12]
+RELATIVE_PATH=\Program Files (x86)\Micro Focus\extend 10.0.1\AcuGT\sample\def\showmsg.def
+FOLDER_NAME=Copylib
+OWNER_PATH=Source\SendMail.cbl
+
+[FILE_CONTENT-Client:FILE13]
+RELATIVE_PATH=\Program Files (x86)\Micro Focus\extend 10.0.1\AcuGT\sample\def\showmsg.cpy
+FOLDER_NAME=Copylib
+OWNER_PATH=Source\SendMail.cbl
+
+[FILE_CONTENT-Client:FILE14]
+RELATIVE_PATH=\Program Files (x86)\Micro Focus\extend 10.0.1\AcuGT\sample\def\fonts.def
+FOLDER_NAME=Copylib
+OWNER_PATH=Source\SendMail.cbl
+
+[FILE_CONTENT-Client:FILE15]
+RELATIVE_PATH=Copylib\SDKClient.Def
+FOLDER_NAME=Copylib
+
+[FILE_CONTENT-Client:FILE16]
+RELATIVE_PATH=object\SendMail.acu
+FOLDER_NAME=Object
+OWNER_PATH=Source\SendMail.cbl
+ATTRIBUTE=0
+
+[FILE_CONTENT-Client:FILE17]
+RELATIVE_PATH=FD\MAILLIST.fd
+FOLDER_NAME=FD
+OWNER_PATH=FD\MAILLIST.dlt
+ATTRIBUTE=0
+
+[FILE_CONTENT-Client:FILE18]
+RELATIVE_PATH=FD\MAILLIST.sl
+FOLDER_NAME=FD
+OWNER_PATH=FD\MAILLIST.dlt
+ATTRIBUTE=0
+
 [PROJECT_COMPILE_SETTING-Client:Debug Mode]
 ; Standard Options
 NAME_OBJECT_FILE=.\object\@.acu
@@ -87,11 +190,12 @@ CODE_VERSION_NUMBER=19
 
 [PROJECT_RUNTIME_SETTING-Client:Debug Mode]
 ; Common Options
-NAME_CONFIGURATION_FILE=\etc\cblconfi
+NAME_CONFIGURATION_FILE=C:\SageDev\PremierCurrent\smconfi
 ; Io Options
 ; Debug Options
 ; ThinClient Options
 REMOTE_CONFIG_NAME=myserver:5632:/etc/cblconfig
+REMOTE_CONFIG_DEBUG=0
 REMOTE_CONFIG_DEBUG_PORT=5632
 
 [PROJECT_ENVIRONMENT_SETTING-Client:Debug Mode]
@@ -99,11 +203,45 @@ VARIABLE0=RUNNAME,Wrun32.exe
 VARIABLE1=COMPILERNAME,Ccbl32.exe
 VARIABLE2=CODE_PREFIX,.\object
 VARIABLE3=ACUPATH,%acudir%\bin
-VARIABLE4=COPYPATH,.\screen;.\copylib;.\report;.\resource;.\fd;%acudir%\sample\def
+VARIABLE4=COPYPATH,.\screen;.\copylib;.\report;.\resource;.\fd;%acudir%\sample\def;%screendir%;%reportdir%;%copydir%;%layoutdir%
 VARIABLE5=THINNAME,AcuThin.exe
 
 [PROJECT_LIBRARY_SETTING-Client:Debug Mode]
 NAME_LIBRARY_FILE=.\object\@.lib
+
+[FILE_COMPILE_OPTION-Client:Debug Mode:Source\SendMail.cbl]
+COPY_DEPENDENCE=Copylib\SDKClient.Def;FD\MAILLIST.sl;FD\MAILLIST.fd;\Program Files (x86)\Micro Focus\extend 10.0.1\AcuGT\sample\def\acugui.def;\Program Files (x86)\Micro Focus\extend 10.0.1\AcuGT\sample\def\acucobol.def;\Program Files (x86)\Micro Focus\extend 10.0.1\AcuGT\sample\def\crtvars.def;\Program Files (x86)\Micro Focus\extend 10.0.1\AcuGT\sample\def\fonts.def;\Program Files (x86)\Micro Focus\extend 10.0.1\AcuGT\sample\def\showmsg.def;Copylib\SendMail.wrk;Screen\SendMail.scr;\Program Files (x86)\Micro Focus\extend 10.0.1\AcuGT\sample\def\showmsg.cpy;Copylib\SendMail.prd;Copylib\SendMail.evt
+FOLLOW_PROJECT=1
+; Standard Options
+NAME_OBJECT_FILE=.\object\@.acu
+NAME_ERROR_FILE=@.err
+MAX_ERROR_COUNT_NUM=100
+REMOTE_SERVER_NAME=myserver
+REMOTE_SERVER_PORT=5632
+REMOTE_SERVER_DIR=/
+REMOTE_OBJECT_FILE=@.acu
+; Listing Options
+NAME_LISTING_FILE=.\list\@.lst
+; Compatibility Options
+COMPATIBILITY_VERSION=19
+; File Options
+XFD_FILE_VERSION=0
+; Source Options
+; ReservedWord Options
+; DataStorage Options
+ALIGNMENT_DATA_BOUNDARY=4
+SYNC_BOUNDARY_LIMIT_NUMBER=4
+; Video Options
+; Mapping Options
+; Precompiler Options
+NAME_PRECOMPILE_OUTPUT_FILE=.\list\@.asq
+; Native Code Options
+; Debugger Options
+INCLUDE_ALL_INFO=1
+; Interop Options
+; Miscellaneous Options
+DEBUGGING=1
+CODE_VERSION_NUMBER=19
 
 [PROJECT_COMPILE_SETTING-Client:Release Mode]
 ; Standard Options
@@ -149,8 +287,40 @@ VARIABLE0=RUNNAME,Wrun32.exe
 VARIABLE1=COMPILERNAME,Ccbl32.exe
 VARIABLE2=CODE_PREFIX,.\object
 VARIABLE3=ACUPATH,%acudir%\bin
-VARIABLE4=COPYPATH,.\screen;.\copylib;.\report;.\resource;.\fd;%acudir%\sample\def
+VARIABLE4=COPYPATH,.\screen;.\copylib;.\report;.\resource;.\fd;%acudir%\sample\def;%screendir%;%reportdir%;%copydir%;%layoutdir%
 VARIABLE5=THINNAME,AcuThin.exe
 
 [PROJECT_LIBRARY_SETTING-Client:Release Mode]
 NAME_LIBRARY_FILE=.\object\@.lib
+
+[FILE_COMPILE_OPTION-Client:Release Mode:Source\SendMail.cbl]
+FOLLOW_PROJECT=1
+RECPMPILE=1
+; Standard Options
+NAME_OBJECT_FILE=.\object\@.acu
+NAME_ERROR_FILE=@.err
+MAX_ERROR_COUNT_NUM=100
+REMOTE_SERVER_NAME=myserver
+REMOTE_SERVER_PORT=5632
+REMOTE_SERVER_DIR=/
+REMOTE_OBJECT_FILE=@.acu
+; Listing Options
+NAME_LISTING_FILE=.\list\@.lst
+; Compatibility Options
+COMPATIBILITY_VERSION=19
+; File Options
+XFD_FILE_VERSION=0
+; Source Options
+; ReservedWord Options
+; DataStorage Options
+ALIGNMENT_DATA_BOUNDARY=4
+SYNC_BOUNDARY_LIMIT_NUMBER=4
+; Video Options
+; Mapping Options
+; Precompiler Options
+NAME_PRECOMPILE_OUTPUT_FILE=.\list\@.asq
+; Native Code Options
+; Debugger Options
+; Interop Options
+; Miscellaneous Options
+CODE_VERSION_NUMBER=19

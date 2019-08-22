@@ -6,7 +6,7 @@
       *{Bench}prgid
        PROGRAM-ID. SendMail.
        AUTHOR. Edgar.Irle.
-       DATE-WRITTEN. Thursday, 22 August 2019 12:55:17.
+       DATE-WRITTEN. Thursday, 22 August 2019 16:04:50.
        REMARKS. 
       *{Bench}end
        ENVIRONMENT                 DIVISION.
@@ -14,7 +14,7 @@
        SPECIAL-NAMES.
       *{Bench}activex-def
       *{Bench}end
-      ***** COPY "BackupLib.def"..
+       COPY "SDKClient.def"..
       *{Bench}decimal-point
       *{Bench}end
        INPUT-OUTPUT                SECTION.
@@ -36,10 +36,19 @@
        COPY "showmsg.def".
       *{Bench}end
 
-      ***** 77  BACKUP-HANDLE usage is handle of   
-      *****      "@BackupLib.BackupLib.BackupClass".
+       77  SDK-SEND-HANDLE usage is handle of   
+            "@SDKClient.SDKClient.MailTaskSubmitter".
+
+       77  SDK-FIND-HANDLE usage is handle of   
+            "@SDKClient.SDKClient.MailTaskStatus".
+
+       01  WS-SDK-MESSAGES.
+           05  WS-ERROR-STATUS         PIC 9.
+           05  WS-ERROR-MESSAGE        PIC X(300).
 
        01  WS-VENDOR-KEY               PIC X(40).
+       01  WS-SITE-CODE                PIC X(6).
+       01  WS-URL                      PIC X(100).
        01  SUB                         PIC 999.
        01  WS-POINTER                  PIC 9(5).
        01  WS-LINE-VALUE               PIC X(100).
@@ -98,6 +107,7 @@
       ********************************
 
            PERFORM ACU-INIT-FONT.
+           SET ENVIRONMENT "DLL_CONVENTION" TO "1"
 
            PERFORM A100-INITIAL.
 
@@ -126,6 +136,8 @@
       ********************************
 
            ACCEPT WS-VENDOR-KEY FROM ENVIRONMENT "X_VENDOR_KEY".
+           ACCEPT WS-URL        FROM ENVIRONMENT "X_URL".
+           ACCEPT WS-SITE-CODE  FROM ENVIRONMENT "X_SITE_CODE".
 
        A100-EXIT.
       ********************************
@@ -138,8 +150,6 @@
            PERFORM B101-INITIAL.
 
            PERFORM Acu-SendMail-Scrn.
-
-           DISPLAY MESSAGE WS-MAIL-FROM.
 
        B100-ACCEPT.
            
@@ -179,7 +189,7 @@
        B110-SEND-MAIL SECTION.
       ********************************
            
-           PERFORM C100-CREATE-MAIL-HANDLE.
+           PERFORM C100-CREATE-SEND-MAIL-HANDLE.
 
            PERFORM C200-MODIFY-MAIL-HANDLE-SEND.
 
@@ -189,7 +199,7 @@
 
        B110-FINAL.
 
-           PERFORM C101-DESTROY-MAIL-HANDLE.
+           PERFORM C101-DESTROY-SEND-MAIL-HANDLE.
 
        B110-EXIT.
       ********************************
@@ -223,13 +233,13 @@
        B120-QUERY-RESPONSE SECTION.
       ********************************
 
-           PERFORM C100-CREATE-MAIL-HANDLE.
+           PERFORM C102-CREATE-FIND-MAIL-HANDLE.
 
            PERFORM C203-INQUIRE-MAIL-RESPONSE.
 
        B120-FINAL.
 
-           PERFORM C101-DESTROY-MAIL-HANDLE.
+           PERFORM C101-DESTROY-SEND-MAIL-HANDLE.
 
        B120-EXIT.
       ********************************
@@ -264,7 +274,7 @@
        B201-GET-VALUES SECTION.
       ********************************
 
-           PERFORM C100-CREATE-MAIL-HANDLE.
+           PERFORM C102-CREATE-FIND-MAIL-HANDLE.
 
            PERFORM Z100-OPEN-MAILLIST.
 
@@ -272,7 +282,7 @@
 
        B201-FINAL.
 
-           PERFORM C101-DESTROY-MAIL-HANDLE.
+           PERFORM C103-DESTROY-FIND-MAIL-HANDLE.
            
            PERFORM Z102-CLOSE-MAILLIST.
 
@@ -282,28 +292,50 @@
            EXIT.
 
       ****************************************************************** 
-       C100-CREATE-MAIL-HANDLE SECTION.
+       C100-CREATE-SEND-MAIL-HANDLE SECTION.
       ********************************
 
-      *     ACCEPT TERMINAL-ABILITIES FROM TERMINAL-INFO.
-      *     ACCEPT WS-SERVER-NAME FROM ENVIRONMENT "WS-SERVER-NAME".
-      *     create "@BackupLib",
-      *     NAMESPACE IS "BackupLib",
-      *     CLASS-NAME IS "BackupClass"              
-      *     handle is BACKUP-HANDLE
-      *     SERVER-NAME IS ws-server-name.
+           ACCEPT TERMINAL-ABILITIES FROM TERMINAL-INFO.
+           create "@SDKClient",
+           NAMESPACE IS "SDKClient",
+           CLASS-NAME IS "MailTaskSubmitter"              
+           handle is SDK-SEND-HANDLE.
 
        C100-EXIT.
       ********************************
            EXIT.
 
       ****************************************************************** 
-       C101-DESTROY-MAIL-HANDLE SECTION.
+       C101-DESTROY-SEND-MAIL-HANDLE SECTION.
       ********************************
            
-      *****     DESTROY S3BACKUP-HANDLE.
+           DESTROY SDK-SEND-HANDLE.
 
        C101-EXIT.
+      ********************************
+           EXIT.
+
+      ****************************************************************** 
+       C102-CREATE-FIND-MAIL-HANDLE SECTION.
+      ********************************
+
+           ACCEPT TERMINAL-ABILITIES FROM TERMINAL-INFO.
+           create "@SDKClient",
+           NAMESPACE IS "SDKClient",
+           CLASS-NAME IS "MailTaskStatus"              
+           handle is SDK-FIND-HANDLE.
+
+       C102-EXIT.
+      ********************************
+           EXIT.
+
+      ****************************************************************** 
+       C103-DESTROY-FIND-MAIL-HANDLE SECTION.
+      ********************************
+           
+           DESTROY SDK-FIND-HANDLE.
+
+       C103-EXIT.
       ********************************
            EXIT.
 
@@ -311,13 +343,22 @@
        C200-MODIFY-MAIL-HANDLE-SEND SECTION.
       ********************************
 
-      *****     MODIFY S3BACKUP-HANDLE "@SendMail" 
-      *****           (WS-MAIL-KEY,
-      *****            WS-MAIL-FROM,
-      *****            WS-MAIL-TO,
-      *****            WS-MAIL-BODY) GIVING WS-DELL-STATUS.
-      *****
-      *****     INQUIRE S3BACKUP-HANDLE ErrorMessage in WS-DELL-STATUS.
+           MOVE SPACES TO WS-ERROR-STATUS WS-ERROR-MESSAGE.
+
+           MOVE SCR-TO TO WS-MAIL-TO
+           MOVE SCR-SUBJECT TO WS-MAIL-SUBJECT
+           MOVE SCR-BODY TO WS-MAIL-BODY
+
+           MODIFY SDK-SEND-HANDLE "@SendEmailTask". 
+                 (WS-VENDOR-KEY,
+                  WS-SITE-CODE,
+                  WS-MAIL-FROM,
+                  WS-MAIL-TO,
+                  WS-MAIL-SUBJECT,
+                  WS-MAIL-BODY) GIVING WS-ERROR-MESSAGE.
+      
+      *     INQUIRE SDK-HANDLE Result in WS-ERROR-STATUS.
+
 
        C200-EXIT.
       ********************************
@@ -327,20 +368,8 @@
        C201-INQUIRE-MAIL-SEND SECTION.
       ********************************
 
-      *****       inquire BACKUP-HANDLE EventStatus 
-      *****            In WS-PROG
-      *****       MOVE SPACES TO backup-per-lbl-val
-      *****       inquire BACKUP-HANDLE CurrentFile 
-      *****            In WS-CUR-FILE
-      *****       STRING "Busy with Company " DELIMITED BY SIZE
-      *****              LS-CO(SUB1)          DELIMITED BY SIZE
-      *****              " - File: "          DELIMITED BY SIZE
-      *****              WS-CUR-FILE          DELIMITED BY "  "
-      *****              INTO backup-per-lbl-val 
-      *****       DISPLAY backup-per-lbl
-      *****       MODIFY Progfr, FILL-PERCENT WS-PROG
-      *****       inquire BACKUP-HANDLE ErrorStatus 
-      *****            In con-ErrorStatus
+           INQUIRE SDK-SEND-HANDLE TaskId IN WS-MAIL-ID.
+                   
 
        C201-EXIT.
       ********************************

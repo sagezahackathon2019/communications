@@ -29,7 +29,7 @@
            03 SendMail-Ef-1a, Entry-Field, 
               COL 13.20, LINE 11.10, LINES 2.90 CELLS, 
               SIZE 60.80 CELLS, 
-              3-D, FONT IS Arial9, ID IS 7, VALUE ScrSubject.
+              3-D, FONT IS Arial9, ID IS 7, VALUE Scr-Subject.
            03 SendMail-Ef-2, Entry-Field, 
               COL 13.20, LINE 15.20, LINES 36.00 CELLS, 
               SIZE 60.80 CELLS, 

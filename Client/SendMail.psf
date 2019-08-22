@@ -101,9 +101,9 @@ m_bFixed=1
 @}}
 [FDITEM8_WK]
 m_nType=10
-m_strName=ScrSubject
-m_strRawPic=X(500)
-m_strPic=X(500)
+m_strName=Scr-Body
+m_strRawPic=X(1000)
+m_strPic=X(1000)
 m_nItemLevel=77
 m_nSync=-1
 m_bFixed=1
@@ -112,34 +112,23 @@ m_bFixed=1
 @}}
 [FDITEM9_WK]
 m_nType=10
-m_strName=Scr-Body
-m_strRawPic=X(1000)
-m_strPic=X(1000)
-m_nItemLevel=77
+m_nItemLevel=1
 m_nSync=-1
 m_bFixed=1
 {{@DataItem_m_strDescriptionFDITEM9_WK
 
 @}}
 [FDITEM10_WK]
-m_nType=10
-m_nItemLevel=1
-m_nSync=-1
-m_bFixed=1
-{{@DataItem_m_strDescriptionFDITEM10_WK
-
-@}}
-[FDITEM11_WK]
 m_strName=Scr-Report-Item
 m_strRawPic=X(10000)
 m_strPic=X(10000)
 m_nItemLevel=3
 m_nSync=-1
 m_bFixed=1
-{{@DataItem_m_strDescriptionFDITEM11_WK
+{{@DataItem_m_strDescriptionFDITEM10_WK
 
 @}}
-[FDITEM12_WK]
+[FDITEM11_WK]
 m_nType=10
 m_strName=Scr-Report
 m_strRawPic=X(100)
@@ -152,12 +141,22 @@ m_bOccurs=1
 m_bFixed=1
 m_strRawSize=100
 m_nSize=100
+{{@DataItem_m_strDescriptionFDITEM11_WK
+
+@}}
+[FDITEM12_WK]
+m_nType=10
+m_strName=Courier-New9
+m_nUsage=26
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
 {{@DataItem_m_strDescriptionFDITEM12_WK
 
 @}}
 [FDITEM13_WK]
 m_nType=10
-m_strName=Courier-New9
+m_strName=Courier9
 m_nUsage=26
 m_nItemLevel=77
 m_nSync=-1
@@ -167,7 +166,7 @@ m_bFixed=1
 @}}
 [FDITEM14_WK]
 m_nType=10
-m_strName=Courier9
+m_strName=Goudy-Stout9
 m_nUsage=26
 m_nItemLevel=77
 m_nSync=-1
@@ -177,7 +176,7 @@ m_bFixed=1
 @}}
 [FDITEM15_WK]
 m_nType=10
-m_strName=Goudy-Stout9
+m_strName=Courier10
 m_nUsage=26
 m_nItemLevel=77
 m_nSync=-1
@@ -186,9 +185,10 @@ m_bFixed=1
 
 @}}
 [FDITEM16_WK]
-m_nType=10
-m_strName=Courier10
-m_nUsage=26
+m_nType=11
+m_strName=MLSTAT
+m_strRawPic=X(2)
+m_strPic=X(2)
 m_nItemLevel=77
 m_nSync=-1
 m_bFixed=1
@@ -197,22 +197,22 @@ m_bFixed=1
 @}}
 [FDITEM17_WK]
 m_nType=11
-m_strName=MLSTAT
-m_strRawPic=X(2)
-m_strPic=X(2)
-m_nItemLevel=77
-m_nSync=-1
-m_bFixed=1
-{{@DataItem_m_strDescriptionFDITEM17_WK
-
-@}}
-[FDITEM18_WK]
-m_nType=11
 m_strName=Valid-MAILLIST
 m_nItemLevel=88
 m_nSync=-1
 m_bFixed=1
 m_strTrue="00" THRU "09"
+{{@DataItem_m_strDescriptionFDITEM17_WK
+
+@}}
+[FDITEM18_WK]
+m_nType=10
+m_strName=Scr-Subject
+m_strRawPic=X(500)
+m_strPic=X(500)
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
 {{@DataItem_m_strDescriptionFDITEM18_WK
 
 @}}
@@ -623,7 +623,7 @@ Begin Screen SendMail
          Use Tab           = FALSE
          Value Multiple    = FALSE
          Value Picture     = X(500)
-         Value Variable    = ScrSubject
+         Value Variable    = Scr-Subject
          Visible           = 1:TRUE
       End
       Begin Entry-Field SendMail-Ef-2
