@@ -80,10 +80,12 @@
         [Route("mail/status/{id}")]
         public IActionResult GetMailTaskStatus([FromRoute] string id)
         {
+            var vendorId = HttpContext.Items.Where(x => x.Key == "VendorId").First().Value.ToString();
+
             Guid taskId = Guid.Parse(id);
 
             var mailTask = _context.MailTasks
-                .Where(x => x.Id == taskId)
+                .Where(x => x.Id == taskId && x.VendorId == Guid.Parse(vendorId))
                 .FirstOrDefault();
 
             var nestedPayload = new MailTaskStatusDto()
@@ -108,28 +110,43 @@
         [Route("mail/cancel/{id}")]
         public IActionResult CancelMail([FromRoute] string id)
         {
+            var vendorId = HttpContext.Items.Where(x => x.Key == "VendorId").First().Value.ToString();
+
             Guid taskId = Guid.Parse(id);
 
             var mailTask = _context.MailTasks
-                .Where(x => x.Id == taskId)
+                .Where(x => x.Id == taskId && x.VendorId == Guid.Parse(vendorId))
                 .FirstOrDefault();
 
-            mailTask.Processed = false;
-            _context.SaveChanges();
-
-            var nestedPayload = new MailTaskCancelledStatusDto()
+            if (!mailTask.Processed)
             {
-                TaskId = mailTask.Id.ToString(),
-                CancelledTimestamp = DateTime.Now
-            };
+                mailTask.Processed = true;
+                _context.SaveChanges();
 
-            var payload = new ResponseObject<MailTaskCancelledStatusDto>()
+                var nestedPayload = new MailTaskCancelledStatusDto()
+                {
+                    TaskId = mailTask.Id.ToString(),
+                    CancelledTimestamp = DateTime.Now
+                };
+
+                var payload = new ResponseObject<MailTaskCancelledStatusDto>()
+                {
+                    Payload = nestedPayload,
+                    Success = true
+                };
+
+                return Json(payload);
+            }
+            else
             {
-                Payload = nestedPayload,
-                Success = true
-            };
+                var payload = new ResponseObject<string>()
+                {
+                    Payload = "Mail has already been processed.",
+                    Success = true
+                };
 
-            return Json(payload);
+                return Json(payload);
+            }
         }
 
         [HttpGet]
