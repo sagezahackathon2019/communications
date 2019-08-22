@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Communications.API.Data;
+using Communications.API.Helpers;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Builder;
@@ -42,8 +43,9 @@ namespace Communications.API
 
             string connectionString = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=HackathonApi;Trusted_Connection=True;";
 
-            services.AddDbContext<MainDbContext>
-                (options => options.UseSqlServer(connectionString));
+            services.AddDbContext<MainDbContext>(options => {
+                options.UseSqlServer(connectionString);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,11 +68,67 @@ namespace Communications.API
 
             app.UseHangfireDashboard("/hangfire");
 
-            //app.Use(async (context, next) => {
+            app.Use(async (context, next) =>
+            {
 
-            //    //IF requests for certain endpoints in certain controllers DO NOT have the X-Vendor-Key header, return an 401 - Unauthorized response
+                bool isCommunicationsEndpoint = context.Request.Path.Value.Contains("api/communications");
 
-            //});
+                if (isCommunicationsEndpoint)
+                {
+                    var hasVendorKeyHeader = context.Request.Headers.Any(x => x.Key == "X-Vendor-Key");
+
+                    if (hasVendorKeyHeader)
+                    {
+                        var vendorKey = context.Request.Headers.Where(x => x.Key.ToLower() == "x-vendor-key").FirstOrDefault().Value;
+
+                        using (var serviceScope = app.ApplicationServices.CreateScope())
+                        {
+                            var services = serviceScope.ServiceProvider;
+                            MainDbContext mainDbContext = services.GetService<MainDbContext>();
+
+                            VendorHelper vendorHelper = new VendorHelper(mainDbContext);
+
+                            var parsedVendorKey = Guid.Parse(vendorKey);
+
+                            var vendorExists = vendorHelper.VendorExists(parsedVendorKey);
+
+                            if (vendorExists)
+                            {
+                                context.Items.Add(key: "VendorId", value: vendorKey);
+
+                                await next.Invoke();
+                            }
+                            else
+                            {
+                                context.Response.StatusCode = 401;
+                                await context.Response.WriteAsync("No Vendor with the key provided exists. Unauthorized.");
+                            }
+                        }
+                        
+                    }
+                    else
+                    {
+                        context.Response.StatusCode = 401;
+                        await context.Response.WriteAsync("No X-Vendor-Key header found on the HTTP request. Unauthorized.");
+                    }
+                }
+                else
+                {
+                    await next.Invoke();
+                }
+
+                //IF requests for certain endpoints in certain controllers DO NOT have the X-Vendor-Key header, return an 401 - Unauthorized response
+
+                //var hasVendorKeyHeader = context.Request.Headers.Any(x => x.Key == "X-Vendor-Key");
+
+                //if (hasVendorKeyHeader)
+                //{
+                //    var vendorKey = context.Request.Headers.Where(x => x.Key.ToLower() == "x-vendor-key").FirstOrDefault().Value;
+                //    context.Items.Add(key: "VendorId", value: vendorKey);
+                //}
+
+                //await next.Invoke();
+            });
 
             app.UseMvc(routes =>
             {
