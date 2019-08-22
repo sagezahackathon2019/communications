@@ -5,3 +5,6 @@
 **/obj/
 Client/Object/
 .vs/
+**/*.user
+**/wwwroot/css/*.css
+**/wwwroot/js/*.js

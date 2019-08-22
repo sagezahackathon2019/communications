@@ -20,6 +20,18 @@ namespace Communications.API.Controllers
             return View();
         }
 
+        public IActionResult HangfireDashboard()
+        {
+            return Redirect("/hangfire");
+        }
+		
+		[Route("AddVendor")]
+        [HttpGet]
+        public IActionResult AddVendor()
+        {
+            return View();
+        }
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
