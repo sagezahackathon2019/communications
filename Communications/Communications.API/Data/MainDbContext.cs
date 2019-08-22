@@ -19,6 +19,7 @@ namespace Communications.API.Data
         }
 
         public virtual DbSet<MailTask> MailTasks { get; set; }
+        public virtual DbSet<Vendor> Vendors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
