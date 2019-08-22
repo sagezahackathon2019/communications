@@ -47,7 +47,7 @@ namespace CSharpClient
         {
             var status = new MailTaskStatus();
             status.GetEmailTaskStatus(_url, _taskID, key);
-            string result = $"Processed: {status.Processed}\r\nReceived:{status.ReceivedTimestamp}";
+            string result = $"Processed: {status.Processed}\r\nReceivedTimeStamp:{status.ReceivedTimestamp}\r\nProcessedTimeStamp:{status.ProcessedTimestamp}";
             textBox1.Text = result;
         }
     }
