@@ -40,7 +40,6 @@ namespace Communications.API.Helpers
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally
@@ -102,6 +101,7 @@ namespace Communications.API.Helpers
         {
             var mailTask = _context.MailTasks.FirstOrDefault(x => x.Id == id);
             mailTask.Processed = processed;
+            mailTask.ProcessedTimestamp = DateTime.Now;
 
             _context.SaveChanges();
         }
