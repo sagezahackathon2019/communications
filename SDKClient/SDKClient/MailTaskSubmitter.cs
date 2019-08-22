@@ -20,36 +20,37 @@ namespace SDKClient
         public string ErrorMessage { get; set; }
         public int Success { get; set; }
 
-        internal class Response
+        public class Response
         {
-            internal MailTaskResult Payload { get; set; }
-            internal bool Success { get; set; }
+            public MailTaskResult Payload { get; set; }
+            public bool Success { get; set; }
         }
 
-        internal class MailTaskResult
+        public class MailTaskResult
         {
-            internal string ReceivedTimestamp { get; set; }
-            internal bool Processed { get; set; }
-            internal string StatusUrl { get; set; }
-            internal string CancelUrl { get; set; }
-            internal string TaskId { get; set; }
-            internal string VendorId { get; set; }
+            public string ReceivedTimestamp { get; set; }
+            public bool Processed { get; set; }
+            public string StatusUrl { get; set; }
+            public string CancelUrl { get; set; }
+            public string TaskId { get; set; }
+            public string VendorId { get; set; }
         }
 
-        public void SendEmailTask(string vendorKey, string clientId, string from, string to, string subject, string body)
+        public void SendEmailTask(string baseUrl, string vendorKey, string clientId, string from, string to, string subject, string body)
         {
+            BaseUrl = baseUrl.Trim();
             try
             {
                 MailObject mailObject = new MailObject
                 {
-                    Body = body,
-                    ClientId = clientId,
-                    From = from,
-                    Subject = subject,
-                    To = to.Split(';')
+                    Body = body.Trim(),
+                    ClientId = clientId.Trim(),
+                    From = from.Trim(),
+                    Subject = subject.Trim(),
+                    To = to.Trim().Split(';')
                 };
 
-                var result = WebUtility.SendRequestJSON($"{BaseUrl}/api/communications/mail/submit", "POST", vendorKey, mailObject, null);
+                var result = WebUtility.SendRequestJSON($"{BaseUrl.Trim()}/api/communications/mail/submit", "POST", vendorKey.Trim(), mailObject, null);
                 var response = JsonConvert.DeserializeObject<Response>(result);
 
                 Success = response.Success ? 1 : 0;
