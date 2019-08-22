@@ -6,8 +6,8 @@
       *{Bench}prgid
        PROGRAM-ID. SendMail.
        AUTHOR. Edgar.Irle.
-       DATE-WRITTEN. Thursday, 22 August 2019 07:34:40.
-       REMARKS.
+       DATE-WRITTEN. Thursday, 22 August 2019 09:01:12.
+       REMARKS. 
       *{Bench}end
        ENVIRONMENT                 DIVISION.
        CONFIGURATION               SECTION.
@@ -48,19 +48,46 @@
       *{Bench}end
       *{Bench}declarative
       *{Bench}end
+       
+       A000-MAIN.
 
-       Acu-Main-Logic.
-      *{Bench}entry-befprg
-      *    Before-Program
-      *{Bench}end
-           PERFORM Acu-Initial-Routine
-      * run main screen
-      *{Bench}run-mainscr
-           PERFORM Acu-SendMail-Routine
-      *{Bench}end
-           PERFORM Acu-Exit-Rtn
-           .
+           PERFORM A100-INITIAL.
 
+           PERFORM Acu-Main-Scrn.
+
+       A000-ACCEPT.
+           ACCEPT Main
+
+           EVALUATE TRUE
+               WHEN Exit-Pushed
+                   GO TO A000-EXIT
+               WHEN sendmail-pushed
+                   PERFORM B100-SEND-MAIL
+               WHEN queryreport-pushed
+                   PERFORM B200-QUERY-REPORT
+           END-EVALUATE.
+
+           GO TO A000-ACCEPT.
+
+       A000-EXIT.
+           STOP RUN.
+
+       A100-INITIAL.
+
+       A100-EXIT.
+           EXIT.
+
+       B100-SEND-MAIL SECTION.
+
+       B100-EXIT.
+           EXIT.
+
+       B200-QUERY-REPORT SECTION.
+
+       B200-EXIT.
+           EXIT.
+
+       TERMINATION SECTION.
       *{Bench}copy-procedure
        COPY "showmsg.cpy".
        COPY "SendMail.prd".

@@ -9,8 +9,16 @@
            88 Event-Occurred VALUE 96.
            88 Screen-No-Input-Field VALUE 97.
            88 Screen-Time-Out VALUE 99.
+           88 sendmail-pushed VALUE 500.
+           88 queryreport-pushed VALUE 501.
       * property-defined variable
 
       * user-defined variable
        77 Screen1-Handle
+                  USAGE IS HANDLE OF WINDOW VALUE NULL.
+       77 SM-Handle
+                  USAGE IS HANDLE OF WINDOW VALUE NULL.
+       77 Main-Handle
+                  USAGE IS HANDLE OF WINDOW VALUE NULL.
+       77 Report-Handle
                   USAGE IS HANDLE OF WINDOW VALUE NULL.

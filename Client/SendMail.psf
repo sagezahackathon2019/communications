@@ -3,7 +3,7 @@
 
 [PROGRAM_CONTENT]
 QUIT_CONFIRM=0
-MAIN_SCREEN_NAME=SendMail
+MAIN_SCREEN_NAME=Main
 
 {{@DESCRIPTION:
 
@@ -26,6 +26,36 @@ m_nItemLevel=77
 m_nSync=-1
 m_bFixed=1
 {{@DataItem_m_strDescriptionFDITEM0_WK
+
+@}}
+[FDITEM1_WK]
+m_nType=10
+m_strName=SM-Handle
+m_nUsage=24
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM1_WK
+
+@}}
+[FDITEM2_WK]
+m_nType=10
+m_strName=Main-Handle
+m_nUsage=24
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM2_WK
+
+@}}
+[FDITEM3_WK]
+m_nType=10
+m_strName=Report-Handle
+m_nUsage=24
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM3_WK
 
 @}}
 
@@ -56,7 +86,7 @@ Begin Screen SendMail
    Absolute Column   = 0
    Absolute Line     = 0
    Action            = (None)
-   Auto Minimize     = TRUE
+   Auto Minimize     = FALSE
    Auto Resize       = FALSE
    Bind To Thread    = FALSE
    Boxed             = FALSE
@@ -68,7 +98,281 @@ Begin Screen SendMail
    Controls Uncropped = FALSE
    Erase Screen      = FALSE
    Font              = Default Font
-   Handle Variable   = Screen1-Handle
+   Handle Variable   = SM-Handle
+   Help ID           = 0
+   Label Offset      = 0
+   Layout Manager    = None
+   Lines             = 59.70
+   Link To Thread    = TRUE
+   Max Lines         = 0.00
+   Max Size          = 0.00
+   Measuring Control = Label
+   Measuring Font    = Default Font
+   Measuring Style   = [None]
+   Min Lines         = 0.00
+   Min Size          = 0.00
+   Modeless          = TRUE
+   No Close          = FALSE
+   Resizable         = FALSE
+   Scroll            = FALSE
+   Size              = 78.40
+   System Menu       = TRUE
+   Title             = "Screen"
+   Title Bar         = TRUE
+   Unit              = Cells
+   User Gray         = FALSE
+   User White        = FALSE
+   Visible           = 1:TRUE
+   Window Type       = Floating
+   Wrap              = FALSE
+   Event Procedure   = Screen1-Event-Proc
+End
+
+Begin Screen Main
+   PREFIX            = Main
+   LOCK-CONTROL      = FALSE
+   (Name)            = Main
+   Absolute Column   = 0
+   Absolute Line     = 0
+   Action            = (None)
+   Auto Minimize     = FALSE
+   Auto Resize       = FALSE
+   Bind To Thread    = FALSE
+   Boxed             = FALSE
+   Cell              = TRUE
+   Cell Height       = 10
+   Cell Measure      = Pixels
+   Cell Width        = 10
+   Color             = 65793
+   Controls Uncropped = FALSE
+   Erase Screen      = FALSE
+   Font              = Default Font
+   Handle Variable   = Main-Handle
+   Help ID           = 0
+   Label Offset      = 0
+   Layout Manager    = None
+   Lines             = 25.30
+   Link To Thread    = TRUE
+   Max Lines         = 0.00
+   Max Size          = 0.00
+   Measuring Control = Label
+   Measuring Font    = Default Font
+   Measuring Style   = [None]
+   Min Lines         = 0.00
+   Min Size          = 0.00
+   Modeless          = TRUE
+   No Close          = FALSE
+   Resizable         = FALSE
+   Scroll            = FALSE
+   Size              = 62.60
+   System Menu       = TRUE
+   Title             = "Hacker Looons Inc."
+   Title Bar         = TRUE
+   Unit              = Cells
+   User Gray         = FALSE
+   User White        = FALSE
+   Visible           = 1:TRUE
+   Window Type       = Standard
+   Wrap              = FALSE
+   Event Procedure   = Main-Event-Proc
+   Begin Push-Button Main-Pb-2
+      SCREEN-COL        = 50.70
+      SCREEN-LINE       = 23.00
+      LOCK-CONTROL      = FALSE
+      (Name)            = Main-Pb-2
+      Bitmap Frame      = FALSE
+      Bitmap Number     = 1
+      Bitmap Square     = TRUE
+      Ccol              = 0
+      Cline             = 0
+      Clines            = 0
+      Color             = 0
+      Column            = 50.70
+      Copy Resource     = TRUE
+      Csize             = 0
+      Destroy Type      = Automatic
+      Enable            = 1:TRUE
+      Exception Value   = 27
+      Flat              = FALSE
+      Font              = Default Font
+      Help ID           = 0
+      ID                = 4
+      Is Link           = FALSE
+      Layout Data       = 0
+      Layout Data Max Height Cells = 0.00
+      Layout Data Max Height Pixels = 0
+      Layout Data Max Width Cells = 0.00
+      Layout Data Max Width Pixels = 0
+      Layout Data Min Height Cells = 0.00
+      Layout Data Min Height Pixels = 0
+      Layout Data Min Width Cells = 0.00
+      Layout Data Min Width Pixels = 0
+      Line              = 23.00
+      Lines             = 3.00
+      Multiline         = FALSE
+      No Auto Default   = FALSE
+      No Tab            = FALSE
+      Self Act          = FALSE
+      Size              = 12.70
+      Style             = Other
+      Tab Order         = 1
+      Termination Value = 0
+      Title             = "Quit"
+      Transparent Color = -1
+      Visible           = 1:TRUE
+   End
+   Begin Frame Main-Fr-1
+      SCREEN-COL        = 8.50
+      SCREEN-LINE       = 5.80
+      LOCK-CONTROL      = FALSE
+      (Name)            = Main-Fr-1
+      3D Style          = Engraved
+      Alternate         = FALSE
+      Ccol              = 0
+      Cline             = 0
+      Clines            = 0
+      Color             = 0
+      Column            = 8.50
+      Csize             = 0
+      Destroy Type      = Automatic
+      Font              = Default Font
+      Full Height       = FALSE
+      Help ID           = 0
+      High Color        = 0
+      ID                = 1
+      Layout Data       = 0
+      Layout Data Max Height Cells = 0.00
+      Layout Data Max Height Pixels = 0
+      Layout Data Max Width Cells = 0.00
+      Layout Data Max Width Pixels = 0
+      Layout Data Min Height Cells = 0.00
+      Layout Data Min Height Pixels = 0
+      Layout Data Min Width Cells = 0.00
+      Layout Data Min Width Pixels = 0
+      Line              = 5.80
+      Lines             = 15.70
+      Low Color         = 0
+      Size              = 47.60
+      Tab Order         = 2
+      Thickness         = Default
+      Title             = "Make a selection"
+      Title Position    = 0:Unaligned
+      Visible           = 1:TRUE
+      Begin Push-Button Main-Pb-1
+         SCREEN-COL        = 13.20
+         SCREEN-LINE       = 11.60
+         LOCK-CONTROL      = FALSE
+         (Name)            = Main-Pb-1
+         Bitmap Frame      = FALSE
+         Bitmap Number     = 1
+         Bitmap Square     = TRUE
+         Ccol              = 0
+         Cline             = 0
+         Clines            = 0
+         Color             = 0
+         Column            = 5.70
+         Copy Resource     = TRUE
+         Csize             = 0
+         Destroy Type      = Automatic
+         Enable            = 1:TRUE
+         Exception Value   = 500
+         Flat              = FALSE
+         Font              = Default Font
+         Help ID           = 0
+         ID                = 2
+         Is Link           = FALSE
+         Layout Data       = 0
+         Layout Data Max Height Cells = 0.00
+         Layout Data Max Height Pixels = 0
+         Layout Data Max Width Cells = 0.00
+         Layout Data Max Width Pixels = 0
+         Layout Data Min Height Cells = 0.00
+         Layout Data Min Height Pixels = 0
+         Layout Data Min Width Cells = 0.00
+         Layout Data Min Width Pixels = 0
+         Line              = 6.80
+         Lines             = 4.00
+         Multiline         = FALSE
+         No Auto Default   = FALSE
+         No Tab            = FALSE
+         Self Act          = FALSE
+         Size              = 16.40
+         Style             = Other
+         Tab Order         = 1
+         Termination Value = 0
+         Title             = "Send Email"
+         Transparent Color = -1
+         Visible           = 1:TRUE
+      End
+      Begin Push-Button Main-Pb-1a
+         SCREEN-COL        = 34.90
+         SCREEN-LINE       = 11.60
+         LOCK-CONTROL      = FALSE
+         (Name)            = Main-Pb-1a
+         Bitmap Frame      = FALSE
+         Bitmap Number     = 1
+         Bitmap Square     = TRUE
+         Ccol              = 0
+         Cline             = 0
+         Clines            = 0
+         Color             = 0
+         Column            = 27.40
+         Copy Resource     = TRUE
+         Csize             = 0
+         Destroy Type      = Automatic
+         Enable            = 1:TRUE
+         Exception Value   = 501
+         Flat              = FALSE
+         Font              = Default Font
+         Help ID           = 0
+         ID                = 3
+         Is Link           = FALSE
+         Layout Data       = 0
+         Layout Data Max Height Cells = 0.00
+         Layout Data Max Height Pixels = 0
+         Layout Data Max Width Cells = 0.00
+         Layout Data Max Width Pixels = 0
+         Layout Data Min Height Cells = 0.00
+         Layout Data Min Height Pixels = 0
+         Layout Data Min Width Cells = 0.00
+         Layout Data Min Width Pixels = 0
+         Line              = 6.80
+         Lines             = 4.00
+         Multiline         = FALSE
+         No Auto Default   = FALSE
+         No Tab            = FALSE
+         Self Act          = FALSE
+         Size              = 16.40
+         Style             = Other
+         Tab Order         = 2
+         Termination Value = 0
+         Title             = "Query Report"
+         Transparent Color = -1
+         Visible           = 1:TRUE
+      End
+   End
+End
+
+Begin Screen Report
+   PREFIX            = Report
+   LOCK-CONTROL      = FALSE
+   (Name)            = Report
+   Absolute Column   = 0
+   Absolute Line     = 0
+   Action            = (None)
+   Auto Minimize     = FALSE
+   Auto Resize       = FALSE
+   Bind To Thread    = FALSE
+   Boxed             = FALSE
+   Cell              = TRUE
+   Cell Height       = 10
+   Cell Measure      = Pixels
+   Cell Width        = 10
+   Color             = 65793
+   Controls Uncropped = FALSE
+   Erase Screen      = FALSE
+   Font              = Default Font
+   Handle Variable   = Report-Handle
    Help ID           = 0
    Label Offset      = 0
    Layout Manager    = None
@@ -93,9 +397,9 @@ Begin Screen SendMail
    User Gray         = FALSE
    User White        = FALSE
    Visible           = 1:TRUE
-   Window Type       = Standard
+   Window Type       = Floating
    Wrap              = FALSE
-   Event Procedure   = Screen1-Event-Proc
+   Event Procedure   = Report-Event-Proc
 End
 
 END-SPDATA
@@ -140,6 +444,14 @@ VALUE=97
 CONDITION=Screen-Time-Out
 VALUE=99
 
+[KEYSTATUS_CONTENT:KS6]
+CONDITION=sendmail-pushed
+VALUE=500
+
+[KEYSTATUS_CONTENT:KS7]
+CONDITION=queryreport-pushed
+VALUE=501
+
 [CODE_GENERATION_OPTIONS]
 FOLLOW_PROJECT_OPTIONS=1
 GENERATE_PROGRAM_FILE=1
@@ -149,7 +461,7 @@ GENERATE_SCREEN_SECTION=1
 GENERATE_REPORT_SECTION=1
 GENERATE_PROCEDURE_DIVISION=1
 GENERATE_MENU_PARAGRAPH=1
-GENERATE_LINKAGE_SECTION=1
+GENERATE_LINKAGE_SECTION=0
 REPLACE_REMARK_PART=1
 EXCLUDE_PROGRAM_VARIABLE=1
 EXCLUDE_PROGRAM_PARAGRAPH=1

@@ -24,28 +24,91 @@
       *    After-Routine
            .
 
+       Acu-Main-Routine.
+      *    Before-Routine
+           PERFORM Acu-Main-Scrn
+           PERFORM Acu-Main-Proc
+      *    After-Routine
+           .
+
+       Acu-Report-Routine.
+      *    Before-Routine
+           PERFORM Acu-Report-Scrn
+           PERFORM Acu-Report-Proc
+      *    After-Routine
+           .
+
        Acu-SendMail-Scrn.
            PERFORM Acu-SendMail-Create-Win
            PERFORM Acu-SendMail-Init-Data
            .
 
+       Acu-Main-Scrn.
+           PERFORM Acu-Main-Create-Win
+           PERFORM Acu-Main-Init-Data
+           .
+
+       Acu-Report-Scrn.
+           PERFORM Acu-Report-Create-Win
+           PERFORM Acu-Report-Init-Data
+           .
+
        Acu-SendMail-Create-Win.
       *    Before-Create
       * display screen
-              DISPLAY Standard GRAPHICAL WINDOW
-                 LINES 48.00, SIZE 64.00, CELL HEIGHT 10, 
-                 CELL WIDTH 10, AUTO-MINIMIZE, COLOR IS 65793, 
-                 LABEL-OFFSET 0, LINK TO THREAD, MODELESS, NO SCROLL, 
-                 WITH SYSTEM MENU, 
+              DISPLAY Floating GRAPHICAL WINDOW
+                 LINES 59.70, SIZE 78.40, CELL HEIGHT 10, 
+                 CELL WIDTH 10, COLOR IS 65793, LABEL-OFFSET 0, 
+                 LINK TO THREAD, MODELESS, NO SCROLL, WITH SYSTEM MENU, 
                  TITLE "Screen", TITLE-BAR, NO WRAP, 
                  EVENT PROCEDURE Screen1-Event-Proc, 
-                 HANDLE IS Screen1-Handle
+                 HANDLE IS SM-Handle
       * toolbar
-           DISPLAY SendMail UPON Screen1-Handle
+           DISPLAY SendMail UPON SM-Handle
+      *    After-Create
+           .
+
+       Acu-Main-Create-Win.
+      *    Before-Create
+      * display screen
+              DISPLAY Standard GRAPHICAL WINDOW
+                 LINES 25.30, SIZE 62.60, CELL HEIGHT 10, 
+                 CELL WIDTH 10, COLOR IS 65793, LABEL-OFFSET 0, 
+                 LINK TO THREAD, MODELESS, NO SCROLL, WITH SYSTEM MENU, 
+                 TITLE "Hacker Looons Inc.", TITLE-BAR, NO WRAP, 
+                 EVENT PROCEDURE Main-Event-Proc, 
+                 HANDLE IS Main-Handle
+      * toolbar
+           DISPLAY Main UPON Main-Handle
+      *    After-Create
+           .
+
+       Acu-Report-Create-Win.
+      *    Before-Create
+      * display screen
+              DISPLAY Floating GRAPHICAL WINDOW
+                 LINES 48.00, SIZE 64.00, CELL HEIGHT 10, 
+                 CELL WIDTH 10, COLOR IS 65793, LABEL-OFFSET 0, 
+                 LINK TO THREAD, MODELESS, NO SCROLL, WITH SYSTEM MENU, 
+                 TITLE "Screen", TITLE-BAR, NO WRAP, 
+                 EVENT PROCEDURE Report-Event-Proc, 
+                 HANDLE IS Report-Handle
+      * toolbar
+           DISPLAY Report UPON Report-Handle
       *    After-Create
            .
 
        Acu-SendMail-Init-Data.
+      *    Before-Initdata
+      *    After-Initdata
+           .
+
+       Acu-Main-Init-Data.
+      *    Before-Initdata
+      *    After-Initdata
+           .
+
+       Acu-Report-Init-Data.
       *    Before-Initdata
       *    After-Initdata
            .
@@ -56,7 +119,27 @@
                  ON EXCEPTION PERFORM Acu-SendMail-Evaluate-Func
               END-ACCEPT
            END-PERFORM
-           DESTROY Screen1-Handle
+           DESTROY SM-Handle
+           INITIALIZE Key-Status
+           .
+      * Main
+       Acu-Main-Proc.
+           PERFORM UNTIL Exit-Pushed
+              ACCEPT Main  
+                 ON EXCEPTION PERFORM Acu-Main-Evaluate-Func
+              END-ACCEPT
+           END-PERFORM
+           DESTROY Main-Handle
+           INITIALIZE Key-Status
+           .
+      * Report
+       Acu-Report-Proc.
+           PERFORM UNTIL Exit-Pushed
+              ACCEPT OMITTED LINE 1 COL 1  
+                 ON EXCEPTION PERFORM Acu-Report-Evaluate-Func
+              END-ACCEPT
+           END-PERFORM
+           DESTROY Report-Handle
            INITIALIZE Key-Status
            .
 
@@ -73,7 +156,41 @@
            MOVE 1 TO Accept-Control
            .
 
+      * Main
+       Acu-Main-Evaluate-Func.
+           EVALUATE TRUE
+              WHEN Exit-Pushed
+                 PERFORM Acu-Main-Exit
+              WHEN Event-Occurred
+                 IF Event-Type = Cmd-Close
+                    PERFORM Acu-Main-Exit
+                 END-IF
+           END-EVALUATE
+           MOVE 1 TO Accept-Control
+           .
+
+      * Report
+       Acu-Report-Evaluate-Func.
+           EVALUATE TRUE
+              WHEN Exit-Pushed
+                 PERFORM Acu-Report-Exit
+              WHEN Event-Occurred
+                 IF Event-Type = Cmd-Close
+                    PERFORM Acu-Report-Exit
+                 END-IF
+           END-EVALUATE
+           MOVE 1 TO Accept-Control
+           .
+
        Acu-SendMail-Exit.
+           SET Exit-Pushed TO TRUE
+           .
+
+       Acu-Main-Exit.
+           SET Exit-Pushed TO TRUE
+           .
+
+       Acu-Report-Exit.
            SET Exit-Pushed TO TRUE
            .
 

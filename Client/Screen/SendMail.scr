@@ -3,3 +3,24 @@
       * This is a generated file. DO NOT modify this file directly.
 
        01 SendMail.
+       01 Main.
+           03 Main-Pb-2, Push-Button, 
+              COL 50.70, LINE 23.00, LINES 3.00 CELLS, 
+              SIZE 12.70 CELLS, 
+              EXCEPTION-VALUE 27, ID IS 4, 
+              TITLE "Quit".
+           03 Main-Fr-1, Frame, 
+              COL 8.50, LINE 5.80, LINES 15.70 CELLS, SIZE 47.60 CELLS, 
+              ENGRAVED, ID IS 1, 
+              TITLE "Make a selection", BACKGROUND-LOW.
+           03 Main-Pb-1, Push-Button, 
+              COL 13.20, LINE 11.60, LINES 4.00 CELLS, 
+              SIZE 16.40 CELLS, 
+              EXCEPTION-VALUE 500, ID IS 2, 
+              TITLE "Send Email".
+           03 Main-Pb-1a, Push-Button, 
+              COL 34.90, LINE 11.60, LINES 4.00 CELLS, 
+              SIZE 16.40 CELLS, 
+              EXCEPTION-VALUE 501, ID IS 3, 
+              TITLE "Query Report".
+       01 Report.
