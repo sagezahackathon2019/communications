@@ -37,7 +37,15 @@ namespace Communications.API
             });
 
             services.AddHangfire(x => x.UseMemoryStorage());
-            services.AddHangfireServer();
+
+            //add hangfire server 1
+            services.AddHangfireServer(x => x.ServerName = "Server 1");
+
+            //add hangfire server 2
+            services.AddHangfireServer(x => x.ServerName = "Server 2");
+
+            //add hangfire server 3
+            services.AddHangfireServer(x => x.ServerName = "Server 3");
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
