@@ -59,8 +59,9 @@ namespace Communications.API.Helpers
             {
                 client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                client.Connect("smtp.gmail.com", 587, true);
+                client.Connect("smtp.gmail.com", 587);
 
+                client.AuthenticationMechanisms.Remove("XOAUTH2");
                 // Note: only needed if the SMTP server requires authentication
                 client.Authenticate("sage.za.sss@gmail.com", "Sage@1234$");
 
