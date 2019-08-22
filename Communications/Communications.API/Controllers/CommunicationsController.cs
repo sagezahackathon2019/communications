@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Communications.API.Data;
-using Communications.API.Helpers;
-using Communications.API.Models;
-using Communications.API.Models.Domain;
-using Communications.API.Models.DTOs;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace Communications.API.Controllers
+﻿namespace Communications.API.Controllers
 {
+    using System;
+    using System.Linq;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Http;
+    using System.Collections.Generic;
+
+    using Communications.API.Data;
+    using Communications.API.Models;
+    using Communications.API.Models.DTOs;
+    using Communications.API.Models.Domain;
+    using Communications.API.Helpers;
+
     [Route("api/[controller]")]
     [ApiController]
     public class CommunicationsController : Controller
@@ -79,15 +79,16 @@ namespace Communications.API.Controllers
             return Accepted(uri: taskStatusUrl, value: payload);
         }
 
-
         [HttpGet]
         [Route("mail/status/{id}")]
         public IActionResult GetMailTaskStatus([FromRoute] string id)
         {
+            var vendorId = HttpContext.Items.Where(x => x.Key == "VendorId").First().Value.ToString();
+
             Guid taskId = Guid.Parse(id);
 
             var mailTask = _context.MailTasks
-                .Where(x => x.Id == taskId)
+                .Where(x => x.Id == taskId && x.VendorId == Guid.Parse(vendorId))
                 .FirstOrDefault();
 
             var nestedPayload = new MailTaskStatusDto()
@@ -108,5 +109,118 @@ namespace Communications.API.Controllers
             return Json(payload);
         }
 
+        [HttpGet]
+        [Route("mail/cancel/{id}")]
+        public IActionResult CancelMail([FromRoute] string id)
+        {
+            var vendorId = HttpContext.Items.Where(x => x.Key == "VendorId").First().Value.ToString();
+
+            Guid taskId = Guid.Parse(id);
+
+            var mailTask = _context.MailTasks
+                .Where(x => x.Id == taskId && x.VendorId == Guid.Parse(vendorId))
+                .FirstOrDefault();
+
+            if (!mailTask.Processed)
+            {
+                mailTask.Processed = true;
+                _context.SaveChanges();
+
+                var nestedPayload = new MailTaskCancelledStatusDto()
+                {
+                    TaskId = mailTask.Id.ToString(),
+                    CancelledTimestamp = DateTime.Now
+                };
+
+                var payload = new ResponseObject<MailTaskCancelledStatusDto>()
+                {
+                    Payload = nestedPayload,
+                    Success = true
+                };
+
+                return Json(payload);
+            }
+            else
+            {
+                var payload = new ResponseObject<string>()
+                {
+                    Payload = "Mail has already been processed.",
+                    Success = true
+                };
+
+                return Json(payload);
+            }
+        }
+
+        [HttpGet]
+        [Route("mail/status/all")]
+        public IActionResult GetMailTasksStatusesForVendorAndClient([FromQuery] string vendorId, [FromQuery] string clientId)
+        {
+            var mailTasks = _context.MailTasks
+                .Where(x => x.VendorId == Guid.Parse(vendorId) && x.ClientId == clientId)
+                .Select(x => new MailTaskStatusDto() {
+                    Processed = x.Processed,
+                    ProcessedTimestamp = x.ProcessedTimestamp.HasValue ? x.ProcessedTimestamp.Value.ToString("yyyy-MM-dd hh:mm:ss fff") : "",
+                    ReceivedTimestamp = x.ReceivedTimestamp.ToString("yyyy-MM-dd hh:mm:ss fff"),
+                    TaskId = x.Id.ToString(),
+                    VendorId = x.VendorId.ToString()
+                }).ToList();
+
+            var payload = new ResponseObject<IEnumerable<MailTaskStatusDto>>()
+            {
+                Success = true,
+                Payload = mailTasks
+            };
+
+            return Json(payload);
+        }
+
+        [HttpGet]
+        [Route("mail/status/processed")]
+        public IActionResult GetProcessedMailTaskStatusesForVendorAndClient([FromQuery] string vendorId, [FromQuery] string clientId)
+        {
+            var mailTasks = _context.MailTasks
+                .Where(x => x.VendorId == Guid.Parse(vendorId) && x.ClientId == clientId && x.Processed)
+                .Select(x => new MailTaskStatusDto()
+                {
+                    Processed = x.Processed,
+                    ProcessedTimestamp = x.ProcessedTimestamp.HasValue ? x.ProcessedTimestamp.Value.ToString("yyyy-MM-dd hh:mm:ss fff") : "",
+                    ReceivedTimestamp = x.ReceivedTimestamp.ToString("yyyy-MM-dd hh:mm:ss fff"),
+                    TaskId = x.Id.ToString(),
+                    VendorId = x.VendorId.ToString()
+                }).ToList();
+
+            var payload = new ResponseObject<IEnumerable<MailTaskStatusDto>>()
+            {
+                Success = true,
+                Payload = mailTasks
+            };
+
+            return Json(payload);
+        }
+
+        [HttpGet]
+        [Route("mail/status/unprocessed")]
+        public IActionResult GetUnprocessedMailTaskStatusesForVendorAndClient([FromQuery] string vendorId, [FromQuery] string clientId)
+        {
+            var mailTasks = _context.MailTasks
+                .Where(x => x.VendorId == Guid.Parse(vendorId) && x.ClientId == clientId && !x.Processed)
+                .Select(x => new MailTaskStatusDto()
+                {
+                    Processed = x.Processed,
+                    ProcessedTimestamp = x.ProcessedTimestamp.HasValue ? x.ProcessedTimestamp.Value.ToString("yyyy-MM-dd hh:mm:ss fff") : "",
+                    ReceivedTimestamp = x.ReceivedTimestamp.ToString("yyyy-MM-dd hh:mm:ss fff"),
+                    TaskId = x.Id.ToString(),
+                    VendorId = x.VendorId.ToString()
+                }).ToList();
+
+            var payload = new ResponseObject<IEnumerable<MailTaskStatusDto>>()
+            {
+                Success = true,
+                Payload = mailTasks
+            };
+
+            return Json(payload);
+        }
     }
 }
