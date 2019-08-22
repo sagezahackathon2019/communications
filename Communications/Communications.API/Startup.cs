@@ -67,15 +67,15 @@ namespace Communications.API
             app.UseCookiePolicy();
 
             app.UseHangfireDashboard("/hangfire");
-
+                       
             app.Use(async (context, next) =>
             {
 
-                bool isCommunicationsEndpoint = context.Request.Path.Value.Contains("api/communications");
+                bool isCommunicationsEndpoint = context.Request.Path.Value.ToLower().Contains("api/communications");
 
                 if (isCommunicationsEndpoint)
                 {
-                    var hasVendorKeyHeader = context.Request.Headers.Any(x => x.Key == "X-Vendor-Key");
+                    var hasVendorKeyHeader = context.Request.Headers.Any(x => x.Key.ToLower() == "x-vendor-key");
 
                     if (hasVendorKeyHeader)
                     {
@@ -116,18 +116,7 @@ namespace Communications.API
                 {
                     await next.Invoke();
                 }
-
-                //IF requests for certain endpoints in certain controllers DO NOT have the X-Vendor-Key header, return an 401 - Unauthorized response
-
-                //var hasVendorKeyHeader = context.Request.Headers.Any(x => x.Key == "X-Vendor-Key");
-
-                //if (hasVendorKeyHeader)
-                //{
-                //    var vendorKey = context.Request.Headers.Where(x => x.Key.ToLower() == "x-vendor-key").FirstOrDefault().Value;
-                //    context.Items.Add(key: "VendorId", value: vendorKey);
-                //}
-
-                //await next.Invoke();
+                
             });
 
             app.UseMvc(routes =>
