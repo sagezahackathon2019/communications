@@ -82,28 +82,44 @@
         {
             var vendorId = HttpContext.Items.Where(x => x.Key == "VendorId").First().Value.ToString();
 
-            Guid taskId = Guid.Parse(id);
+            Guid taskId;
 
-            var mailTask = _context.MailTasks
+            var parseResult = Guid.TryParse(vendorId, out taskId);
+
+            if (parseResult)
+            {
+                var mailTask = _context.MailTasks
                 .Where(x => x.Id == taskId && x.VendorId == Guid.Parse(vendorId))
                 .FirstOrDefault();
 
-            var nestedPayload = new MailTaskStatusDto()
-            {
-                Processed = mailTask.Processed,
-                TaskId = mailTask.Id.ToString(),
-                VendorId = mailTask.VendorId.ToString(),
-                ReceivedTimestamp = mailTask.ReceivedTimestamp.ToString("yyyy-MM-dd hh:mm:ss fff"),
-                ProcessedTimestamp = mailTask.ProcessedTimestamp.HasValue ? mailTask.ProcessedTimestamp.Value.ToString("yyyy-MM-dd hh:mm:ss fff") : ""
-            };
+                if (mailTask != null)
+                {
+                    var nestedPayload = new MailTaskStatusDto()
+                    {
+                        Processed = mailTask.Processed,
+                        TaskId = mailTask.Id.ToString(),
+                        VendorId = mailTask.VendorId.ToString(),
+                        ReceivedTimestamp = mailTask.ReceivedTimestamp.ToString("yyyy-MM-dd hh:mm:ss fff"),
+                        ProcessedTimestamp = mailTask.ProcessedTimestamp.HasValue ? mailTask.ProcessedTimestamp.Value.ToString("yyyy-MM-dd hh:mm:ss fff") : ""
+                    };
 
-            var payload = new ResponseObject<MailTaskStatusDto>()
-            {
-                Payload = nestedPayload,
-                Success = true
-            };
+                    var payload = new ResponseObject<MailTaskStatusDto>()
+                    {
+                        Payload = nestedPayload,
+                        Success = true
+                    };
 
-            return Json(payload);
+                    return Json(payload);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return BadRequest("The TaskId provided isn't a valid Guid.");
+            }
         }
 
         [HttpGet]
@@ -112,40 +128,56 @@
         {
             var vendorId = HttpContext.Items.Where(x => x.Key == "VendorId").First().Value.ToString();
 
-            Guid taskId = Guid.Parse(id);
+            Guid taskId;
 
-            var mailTask = _context.MailTasks
+            var parseResult = Guid.TryParse(vendorId, out taskId);
+
+            if (parseResult)
+            {
+                var mailTask = _context.MailTasks
                 .Where(x => x.Id == taskId && x.VendorId == Guid.Parse(vendorId))
                 .FirstOrDefault();
 
-            if (!mailTask.Processed)
-            {
-                mailTask.Processed = true;
-                _context.SaveChanges();
-
-                var nestedPayload = new MailTaskCancelledStatusDto()
+                if (mailTask != null)
                 {
-                    TaskId = mailTask.Id.ToString(),
-                    CancelledTimestamp = DateTime.Now
-                };
+                    if (!mailTask.Processed)
+                    {
+                        mailTask.Processed = true;
+                        _context.SaveChanges();
 
-                var payload = new ResponseObject<MailTaskCancelledStatusDto>()
+                        var nestedPayload = new MailTaskCancelledStatusDto()
+                        {
+                            TaskId = mailTask.Id.ToString(),
+                            CancelledTimestamp = DateTime.Now
+                        };
+
+                        var payload = new ResponseObject<MailTaskCancelledStatusDto>()
+                        {
+                            Payload = nestedPayload,
+                            Success = true
+                        };
+
+                        return Json(payload);
+                    }
+                    else
+                    {
+                        var payload = new ResponseObject<string>()
+                        {
+                            Payload = "Mail has already been processed.",
+                            Success = true
+                        };
+
+                        return Json(payload);
+                    }
+                }
+                else
                 {
-                    Payload = nestedPayload,
-                    Success = true
-                };
-
-                return Json(payload);
+                    return NotFound();
+                }
             }
             else
             {
-                var payload = new ResponseObject<string>()
-                {
-                    Payload = "Mail has already been processed.",
-                    Success = true
-                };
-
-                return Json(payload);
+                return BadRequest("The TaskId provided isn't a valid Guid.");
             }
         }
 
@@ -153,31 +185,14 @@
         [Route("mail/status/all")]
         public IActionResult GetMailTasksStatusesForVendorAndClient([FromQuery] string vendorId, [FromQuery] string clientId)
         {
-            var mailTasks = _context.MailTasks
-                .Where(x => x.VendorId == Guid.Parse(vendorId) && x.ClientId == clientId)
-                .Select(x => new MailTaskStatusDto() {
-                    Processed = x.Processed,
-                    ProcessedTimestamp = x.ProcessedTimestamp.HasValue ? x.ProcessedTimestamp.Value.ToString("yyyy-MM-dd hh:mm:ss fff") : "",
-                    ReceivedTimestamp = x.ReceivedTimestamp.ToString("yyyy-MM-dd hh:mm:ss fff"),
-                    TaskId = x.Id.ToString(),
-                    VendorId = x.VendorId.ToString()
-                }).ToList();
+            Guid parsedGuid;
 
-            var payload = new ResponseObject<IEnumerable<MailTaskStatusDto>>()
+            var parseResult = Guid.TryParse(vendorId, out parsedGuid);
+
+            if (parseResult)
             {
-                Success = true,
-                Payload = mailTasks
-            };
-
-            return Json(payload);
-        }
-
-        [HttpGet]
-        [Route("mail/status/processed")]
-        public IActionResult GetProcessedMailTaskStatusesForVendorAndClient([FromQuery] string vendorId, [FromQuery] string clientId)
-        {
-            var mailTasks = _context.MailTasks
-                .Where(x => x.VendorId == Guid.Parse(vendorId) && x.ClientId == clientId && x.Processed)
+                var mailTasks = _context.MailTasks
+                .Where(x => x.VendorId == Guid.Parse(vendorId) && x.ClientId == clientId)
                 .Select(x => new MailTaskStatusDto()
                 {
                     Processed = x.Processed,
@@ -187,20 +202,66 @@
                     VendorId = x.VendorId.ToString()
                 }).ToList();
 
-            var payload = new ResponseObject<IEnumerable<MailTaskStatusDto>>()
-            {
-                Success = true,
-                Payload = mailTasks
-            };
+                var payload = new ResponseObject<IEnumerable<MailTaskStatusDto>>()
+                {
+                    Success = true,
+                    Payload = mailTasks
+                };
 
-            return Json(payload);
+                return Json(payload);
+            }
+            else
+            {
+                return BadRequest("The vendorId provided isn't a valid Guid.");
+            }
+        }
+
+        [HttpGet]
+        [Route("mail/status/processed")]
+        public IActionResult GetProcessedMailTaskStatusesForVendorAndClient([FromQuery] string vendorId, [FromQuery] string clientId)
+        {
+            Guid parsedGuid;
+
+            var parsedResult = Guid.TryParse(vendorId, out parsedGuid);
+
+            if (parsedResult)
+            {
+                var mailTasks = _context.MailTasks
+                    .Where(x => x.VendorId == Guid.Parse(vendorId) && x.ClientId == clientId && x.Processed)
+                    .Select(x => new MailTaskStatusDto()
+                    {
+                        Processed = x.Processed,
+                        ProcessedTimestamp = x.ProcessedTimestamp.HasValue ? x.ProcessedTimestamp.Value.ToString("yyyy-MM-dd hh:mm:ss fff") : "",
+                        ReceivedTimestamp = x.ReceivedTimestamp.ToString("yyyy-MM-dd hh:mm:ss fff"),
+                        TaskId = x.Id.ToString(),
+                        VendorId = x.VendorId.ToString()
+                    }).ToList();
+
+                var payload = new ResponseObject<IEnumerable<MailTaskStatusDto>>()
+                {
+                    Success = true,
+                    Payload = mailTasks
+                };
+
+                return Json(payload);
+            }
+            else
+            {
+                return BadRequest("The vendorId provided isn't a valid Guid.");
+            }
         }
 
         [HttpGet]
         [Route("mail/status/unprocessed")]
         public IActionResult GetUnprocessedMailTaskStatusesForVendorAndClient([FromQuery] string vendorId, [FromQuery] string clientId)
         {
-            var mailTasks = _context.MailTasks
+            Guid parsedGuid;
+
+            var parsedResult = Guid.TryParse(vendorId, out parsedGuid);
+
+            if (parsedResult)
+            {
+                var mailTasks = _context.MailTasks
                 .Where(x => x.VendorId == Guid.Parse(vendorId) && x.ClientId == clientId && !x.Processed)
                 .Select(x => new MailTaskStatusDto()
                 {
@@ -211,13 +272,18 @@
                     VendorId = x.VendorId.ToString()
                 }).ToList();
 
-            var payload = new ResponseObject<IEnumerable<MailTaskStatusDto>>()
-            {
-                Success = true,
-                Payload = mailTasks
-            };
+                var payload = new ResponseObject<IEnumerable<MailTaskStatusDto>>()
+                {
+                    Success = true,
+                    Payload = mailTasks
+                };
 
-            return Json(payload);
+                return Json(payload);
+            }
+            else
+            {
+                return BadRequest("The vendorId provided isn't a valid Guid.");
+            }
         }
     }
 }
