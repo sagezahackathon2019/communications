@@ -67,9 +67,11 @@ namespace Communications.API.Helpers
 
         private void SendEmail(MailTask mailTask)
         {
+            var recipientList = new InternetAddressList(mailTask.To.Split(";").Select(x => new MailboxAddress(x)));
+
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress(mailTask.From));
-            message.To.Add(new MailboxAddress(mailTask.To));
+            message.To.AddRange(recipientList);
             message.Subject = mailTask.Subject;
             message.Body = new TextPart("html")
             {
