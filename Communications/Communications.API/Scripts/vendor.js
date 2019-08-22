@@ -14,23 +14,16 @@
 
 		var payload = JSON.stringify(vendor);
 
-		$.ajax({
-			type: "POST",
-			url: endpoint,
-			data: payload,
-			success: function () {
-
-			},
-			contentType: "application/json"
-		})
-		.done(function () {
-			console.log("success");
-		})
-		.fail(function () {
-			console.log("error");
-		});
-	
-			
+        $.ajax({
+            type: "POST",
+            url: endpoint,
+            data: payload,
+            contentType: "application/json"
+        }).then(function (data) {
+            console.log(data);
+        }).catch(function (error) {
+            console.log(error);
+        });
 
 	});
 
