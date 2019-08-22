@@ -1,0 +1,79 @@
+      * SendMail.prd
+      * SendMail.prd is generated from C:\GitRepo\communications\Client\SendMail.Psf
+      * This is a generated file. DO NOT modify this file directly.
+
+       Acu-Initial-Routine.
+      *    Before-Init
+      * get system information
+           ACCEPT System-Information FROM System-Info
+      * get terminal information
+           ACCEPT Terminal-Abilities FROM Terminal-Info
+      *    After-Init
+           .
+
+       Acu-Exit-Rtn.
+      *    After-Program
+           EXIT PROGRAM
+           STOP RUN
+           .
+
+       Acu-SendMail-Routine.
+      *    Before-Routine
+           PERFORM Acu-SendMail-Scrn
+           PERFORM Acu-SendMail-Proc
+      *    After-Routine
+           .
+
+       Acu-SendMail-Scrn.
+           PERFORM Acu-SendMail-Create-Win
+           PERFORM Acu-SendMail-Init-Data
+           .
+
+       Acu-SendMail-Create-Win.
+      *    Before-Create
+      * display screen
+              DISPLAY Standard GRAPHICAL WINDOW
+                 LINES 48.00, SIZE 64.00, CELL HEIGHT 10, 
+                 CELL WIDTH 10, AUTO-MINIMIZE, COLOR IS 65793, 
+                 LABEL-OFFSET 0, LINK TO THREAD, MODELESS, NO SCROLL, 
+                 WITH SYSTEM MENU, 
+                 TITLE "Screen", TITLE-BAR, NO WRAP, 
+                 EVENT PROCEDURE Screen1-Event-Proc, 
+                 HANDLE IS Screen1-Handle
+      * toolbar
+           DISPLAY SendMail UPON Screen1-Handle
+      *    After-Create
+           .
+
+       Acu-SendMail-Init-Data.
+      *    Before-Initdata
+      *    After-Initdata
+           .
+      * SendMail
+       Acu-SendMail-Proc.
+           PERFORM UNTIL Exit-Pushed
+              ACCEPT OMITTED LINE 1 COL 1  
+                 ON EXCEPTION PERFORM Acu-SendMail-Evaluate-Func
+              END-ACCEPT
+           END-PERFORM
+           DESTROY Screen1-Handle
+           INITIALIZE Key-Status
+           .
+
+      * SendMail
+       Acu-SendMail-Evaluate-Func.
+           EVALUATE TRUE
+              WHEN Exit-Pushed
+                 PERFORM Acu-SendMail-Exit
+              WHEN Event-Occurred
+                 IF Event-Type = Cmd-Close
+                    PERFORM Acu-SendMail-Exit
+                 END-IF
+           END-EVALUATE
+           MOVE 1 TO Accept-Control
+           .
+
+       Acu-SendMail-Exit.
+           SET Exit-Pushed TO TRUE
+           .
+

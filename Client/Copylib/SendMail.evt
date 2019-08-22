@@ -1,0 +1,27 @@
+      * SendMail.evt
+      * SendMail.evt is generated from C:\GitRepo\communications\Client\SendMail.Psf
+      * This is a generated file. DO NOT modify this file directly.
+
+
+       Acu-SendMail-Event-Extra.
+           EVALUATE Event-Type
+           WHEN Msg-Close
+              PERFORM Acu-SendMail-Msg-Close
+           END-EVALUATE
+           .
+
+       Acu-SendMail-Msg-Close.
+           ACCEPT Quit-Mode-Flag FROM ENVIRONMENT "QUIT_MODE"
+           IF Quit-Mode-Flag = ZERO
+              PERFORM Acu-SendMail-Exit
+              PERFORM Acu-Exit-Rtn
+           END-IF
+           .
+
+       Screen1-Event-Proc.
+      * 
+           PERFORM Acu-SendMail-Event-Extra
+           .
+      ***   start event editor code   ***
+
+       
