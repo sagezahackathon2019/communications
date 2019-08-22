@@ -37,7 +37,6 @@ namespace Communications.API
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //string connectionString = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=HackathonApi;Trusted_Connection=True;";
             var connectionString = Configuration.GetConnectionString("PrimaryConnection");
 
             services.AddHangfire(configuration => configuration
@@ -148,6 +147,13 @@ namespace Communications.API
             });
 
             CustomInitializer.Initialize(app.ApplicationServices);
+
+            RegisterApplicationDefaults();
+        }
+
+        private void RegisterApplicationDefaults()
+        {
+            BackgroundJobHelper.AddDefaultHangfireProcesses();
         }
     }
 
