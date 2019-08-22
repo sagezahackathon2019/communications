@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Communications.API.Data;
+using Communications.API.Helpers;
 using Communications.API.Models;
 using Communications.API.Models.Domain;
 using Communications.API.Models.DTOs;
@@ -66,6 +67,8 @@ namespace Communications.API.Controllers
                 TaskId = newMailTask.Id.ToString(),
                 VendorId = newMailTask.VendorId.ToString()
             };
+
+            Hangfire.BackgroundJob.Enqueue<MailHelper>(x => x.ProcessMailTask(newMailTask.Id));
 
             var payload = new ResponseObject<MailTaskSubmittedResultDto>()
             {
