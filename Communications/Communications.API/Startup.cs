@@ -37,14 +37,11 @@ namespace Communications.API
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //string connectionString = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=HackathonApi;Trusted_Connection=True;";
-            var connectionString = Configuration.GetConnectionString("PrimaryConnection");
-
             services.AddHangfire(configuration => configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
-                .UseSqlServerStorage(connectionString, new SqlServerStorageOptions
+                .UseSqlServerStorage(Configuration.GetConnectionString("HangfireConnection"), new SqlServerStorageOptions
                 {
                     CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
                     SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
@@ -64,11 +61,11 @@ namespace Communications.API
             services.AddHangfireServer(x => x.ServerName = "Server 3");
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            
 
-            services.AddDbContext<MainDbContext>(options => {
-                options.UseSqlServer(connectionString);
-            });
+            services.AddDbContext<MainDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("PrimaryConnection"));
+            }, optionsLifetime: ServiceLifetime.Transient);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -127,7 +124,6 @@ namespace Communications.API
                                 await context.Response.WriteAsync("No Vendor with the key provided exists. Unauthorized.");
                             }
                         }
-                        
                     }
                     else
                     {
@@ -139,7 +135,6 @@ namespace Communications.API
                 {
                     await next.Invoke();
                 }
-                
             });
 
             app.UseMvc(routes =>
@@ -148,6 +143,27 @@ namespace Communications.API
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            CustomInitializer.Initialize(app.ApplicationServices);
+
+            RegisterApplicationDefaults();
+        }
+
+        private void RegisterApplicationDefaults()
+        {
+            BackgroundJobHelper.AddDefaultHangfireProcesses();
+        }
+    }
+
+
+    public class CustomInitializer
+    {
+        public static void Initialize(IServiceProvider serviceProvider)
+        {
+            using (var context = new MainDbContext(serviceProvider.GetRequiredService<DbContextOptions<MainDbContext>>()))
+            {
+                context.Database.EnsureCreated();
+            }
         }
     }
 }

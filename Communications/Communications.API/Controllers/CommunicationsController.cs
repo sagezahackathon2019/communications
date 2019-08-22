@@ -85,7 +85,7 @@
 
             Guid taskId;
 
-            var parseResult = Guid.TryParse(vendorId, out taskId);
+            var parseResult = Guid.TryParse(id, out taskId);
 
             if (parseResult)
             {

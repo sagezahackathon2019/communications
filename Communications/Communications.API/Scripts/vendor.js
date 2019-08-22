@@ -2,6 +2,9 @@
 
 	$("#register").on("click", function () {
 
+        $('#vendorRegistrationResultSection').attr('hidden', true);
+        $('#vendorKey').text("");
+
 		var endpoint = "api/vendors/register";
 
 		var vendorName = $("#vendorName").val();
@@ -20,7 +23,12 @@
             data: payload,
             contentType: "application/json"
         }).then(function (data) {
-            console.log(data);
+            console.log(data.payload);
+
+            $('#vendorRegistrationResultSection').removeAttr('hidden');
+            $('#vendorKey').text(data.payload);
+
+
         }).catch(function (error) {
             console.log(error);
         });

@@ -17,8 +17,7 @@ namespace Communications.API.Helpers
 
         public bool VendorExists(Guid id)
         {
-            return true;
-            //return _context.Vendors.Any(x => x.Id == id);
+            return _context.Vendors.Any(x => x.Id == id);
         }
     }
 }

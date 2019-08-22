@@ -27,6 +27,10 @@ namespace Communications.API.Helpers
         }
 
         #endregion Constructor
+
+        #region Public Methods
+
+        [JobDisplayName("Sending Email")]
         public void ProcessMailTask(Guid id)
         {
             try
@@ -45,14 +49,31 @@ namespace Communications.API.Helpers
             }
         }
 
-        [JobDisplayName("Sending Email")]
+        public void CleanupEmails()
+        {
+            try
+            {
+                DeleteOldEmails();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
         private void SendEmail(MailTask mailTask)
         {
+            var recipientList = new InternetAddressList(mailTask.To.Split(";").Select(x => new MailboxAddress(x)));
+
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress(mailTask.From));
-            message.To.Add(new MailboxAddress(mailTask.To));
+            message.To.AddRange(recipientList);
             message.Subject = mailTask.Subject;
-            message.Body = new TextPart("plain")
+            message.Body = new TextPart("html")
             {
                 Text = mailTask.Body
             };
@@ -79,12 +100,22 @@ namespace Communications.API.Helpers
 
         private void UpdateMailTask(Guid id, bool processed)
         {
-            var mailTask =  _context.MailTasks.FirstOrDefault(x => x.Id == id);
+            var mailTask = _context.MailTasks.FirstOrDefault(x => x.Id == id);
             mailTask.Processed = processed;
 
             _context.SaveChanges();
         }
 
+        private void DeleteOldEmails()
+        {
+            //var today = DateTime.Today;
+            //var cutOffDate = new DateTime(today.Year, today.Month - 3, 1);
 
+            //var oldEmails =
+            //    _context.MailTasks
+            //    .Where(x => x.Processed == true && x.ProcessedTimestamp.HasValue && x.ProcessedTimestamp.Value < cutOffDate);
+        }
+
+        #endregion Private Methods
     }
 }
