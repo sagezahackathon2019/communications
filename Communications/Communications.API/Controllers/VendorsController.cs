@@ -21,9 +21,9 @@
         }
 
         [Route("Register")]
+        [HttpPost]
         public VendorDto Register(VendorDto newVendor)
         {
-            newVendor.Id = Guid.NewGuid();
             return newVendor;
         }
     }
