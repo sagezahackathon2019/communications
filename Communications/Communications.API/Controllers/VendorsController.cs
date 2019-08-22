@@ -23,7 +23,7 @@
         [Route("Register")]
         public VendorDto Register(VendorDto newVendor)
         {
-            newVendor.ID = Guid.NewGuid();
+            newVendor.Id = Guid.NewGuid();
             return newVendor;
         }
     }
