@@ -11,6 +11,8 @@
            88 Screen-Time-Out VALUE 99.
            88 sendmail-pushed VALUE 500.
            88 queryreport-pushed VALUE 501.
+           88 submit-pushed VALUE 502.
+           88 response-pushed VALUE 503.
       * property-defined variable
 
       * user-defined variable
@@ -22,3 +24,24 @@
                   USAGE IS HANDLE OF WINDOW VALUE NULL.
        77 Report-Handle
                   USAGE IS HANDLE OF WINDOW VALUE NULL.
+       77 Medium-Font
+                  USAGE IS HANDLE OF FONT MEDIUM-FONT VALUE NULL.
+       77 Large-Font
+                  USAGE IS HANDLE OF FONT LARGE-FONT VALUE NULL.
+       77 Arial9
+                  USAGE IS HANDLE OF FONT VALUE NULL.
+       77 Scr-To           PIC  X(500).
+       77 ScrSubject       PIC  X(500).
+       77 Scr-Body         PIC  X(1000).
+       01 .
+           03 Scr-Report-Item  PIC  X(10000).
+           03 Scr-Report REDEFINES Scr-Report-Item  PIC  X(100)
+                      OCCURS 100 TIMES.
+       77 Courier-New9
+                  USAGE IS HANDLE OF FONT VALUE NULL.
+       77 Courier9
+                  USAGE IS HANDLE OF FONT VALUE NULL.
+       77 Goudy-Stout9
+                  USAGE IS HANDLE OF FONT VALUE NULL.
+       77 Courier10
+                  USAGE IS HANDLE OF FONT VALUE NULL.

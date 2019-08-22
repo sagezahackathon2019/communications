@@ -3,6 +3,47 @@
       * This is a generated file. DO NOT modify this file directly.
 
        01 SendMail.
+           03 SendMail-Pb-1, Push-Button, 
+              COL 70.10, LINE 57.30, LINES 2.90 CELLS, SIZE 8.80 CELLS, 
+              EXCEPTION-VALUE 27, FONT IS Arial9, ID IS 1, 
+              TITLE "Close".
+           03 SendMail-Fr-1, Frame, 
+              COL 2.60, LINE 3.90, LINES 52.10 CELLS, SIZE 75.20 CELLS, 
+              ENGRAVED, FONT IS Arial9, ID IS 2, 
+              TITLE "Email", BACKGROUND-LOW.
+           03 SendMail-La-1, Label, 
+              COL 6.40, LINE 7.60, LINES 2.00 CELLS, SIZE 5.10 CELLS, 
+              FONT IS Arial9, ID IS 3, LABEL-OFFSET 0, 
+              TITLE "To".
+           03 SendMail-La-1a, Label, 
+              COL 6.40, LINE 11.40, LINES 2.00 CELLS, SIZE 5.10 CELLS, 
+              FONT IS Arial9, ID IS 4, LABEL-OFFSET 0, 
+              TITLE "Subject".
+           03 SendMail-La-1b, Label, 
+              COL 6.40, LINE 15.20, LINES 2.00 CELLS, SIZE 5.10 CELLS, 
+              FONT IS Arial9, ID IS 5, LABEL-OFFSET 0, 
+              TITLE "Body".
+           03 SendMail-Ef-1, Entry-Field, 
+              COL 13.20, LINE 7.00, LINES 2.90 CELLS, SIZE 60.80 CELLS, 
+              3-D, FONT IS Arial9, ID IS 6, VALUE Scr-To.
+           03 SendMail-Ef-1a, Entry-Field, 
+              COL 13.20, LINE 11.10, LINES 2.90 CELLS, 
+              SIZE 60.80 CELLS, 
+              AUTOFILL-ID 538976288, AUTOFILL-MAX-LINES 1651864352, 
+              3-D, FONT IS Arial9, ID IS 7, VALUE ScrSubject.
+           03 SendMail-Ef-2, Entry-Field, 
+              COL 13.20, LINE 15.20, LINES 37.60 CELLS, 
+              SIZE 60.80 CELLS, 
+              3-D, FONT IS Arial9, ID IS 8, MULTILINE, USE-RETURN, 
+              VALUE Scr-Body.
+           03 SendMail-Pb-1b, Push-Button, 
+              COL 60.60, LINE 57.30, LINES 2.90 CELLS, SIZE 8.80 CELLS, 
+              EXCEPTION-VALUE 503, FONT IS Arial9, ID IS 9, 
+              TITLE "Response".
+           03 SendMail-Pb-1ba, Push-Button, 
+              COL 51.10, LINE 57.30, LINES 2.90 CELLS, SIZE 8.80 CELLS, 
+              EXCEPTION-VALUE 502, FONT IS Arial9, ID IS 10, 
+              TITLE "Submit".
        01 Main.
            03 Main-Pb-2, Push-Button, 
               COL 50.70, LINE 23.00, LINES 3.00 CELLS, 
@@ -24,3 +65,15 @@
               EXCEPTION-VALUE 501, ID IS 3, 
               TITLE "Query Report".
        01 Report.
+           03 SendMail-Pb-1a, Push-Button, 
+              COL 58.90, LINE 64.10, LINES 2.90 CELLS, SIZE 8.80 CELLS, 
+              EXCEPTION-VALUE 27, FONT IS Arial9, ID IS 1, 
+              TITLE "Close".
+           03 Report-Fr-1, Frame, 
+              COL 1.80, LINE 2.10, LINES 61.20 CELLS, SIZE 65.90 CELLS, 
+              ENGRAVED, FONT IS Arial9, ID IS 2, 
+              TITLE "Report Results", BACKGROUND-LOW.
+           03 Report-Ef-1, Entry-Field, 
+              COL 3.20, LINE 3.90, LINES 58.10 CELLS, SIZE 63.10 CELLS, 
+              3-D, FONT IS Courier10, ID IS 3, SECURE, VSCROLL-BAR, 
+              VALUE MULTIPLE Scr-Report.

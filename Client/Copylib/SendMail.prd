@@ -8,13 +8,96 @@
            ACCEPT System-Information FROM System-Info
       * get terminal information
            ACCEPT Terminal-Abilities FROM Terminal-Info
+      * set font
+           PERFORM Acu-Init-Font
       *    After-Init
            .
 
+       Acu-Init-Font.
+      * font setting
+           INITIALIZE WFONT-DATA Arial9
+           MOVE 9 TO WFONT-SIZE
+           MOVE "Arial" TO WFONT-NAME
+           SET WFCHARSET-DEFAULT TO TRUE
+           SET WFONT-BOLD TO FALSE
+           SET WFONT-ITALIC TO FALSE
+           SET WFONT-UNDERLINE TO FALSE
+           SET WFONT-STRIKEOUT TO FALSE
+           SET WFONT-FIXED-PITCH TO FALSE
+           CALL "W$FONT" USING WFONT-GET-FONT, Arial9, WFONT-DATA
+           INITIALIZE WFONT-DATA Courier10
+           MOVE 10 TO WFONT-SIZE
+           MOVE "Courier" TO WFONT-NAME
+           SET WFCHARSET-DEFAULT TO TRUE
+           SET WFONT-BOLD TO FALSE
+           SET WFONT-ITALIC TO FALSE
+           SET WFONT-UNDERLINE TO FALSE
+           SET WFONT-STRIKEOUT TO FALSE
+           SET WFONT-FIXED-PITCH TO TRUE
+           CALL "W$FONT" USING WFONT-GET-FONT, Courier10, WFONT-DATA
+           .
+
        Acu-Exit-Rtn.
+      * destroy font
+           PERFORM Acu-Exit-Font
       *    After-Program
            EXIT PROGRAM
            STOP RUN
+           .
+       Acu-Exit-Font.
+      * font destroy
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Courier10 NOT = NULL
+              DESTROY Courier10
+              SET Courier10 TO NULL
+           END-IF
            .
 
        Acu-SendMail-Routine.
@@ -60,7 +143,7 @@
                  LINES 59.70, SIZE 78.40, CELL HEIGHT 10, 
                  CELL WIDTH 10, COLOR IS 65793, LABEL-OFFSET 0, 
                  LINK TO THREAD, MODELESS, NO SCROLL, WITH SYSTEM MENU, 
-                 TITLE "Screen", TITLE-BAR, NO WRAP, 
+                 TITLE "Send Email", TITLE-BAR, NO WRAP, 
                  EVENT PROCEDURE Screen1-Event-Proc, 
                  HANDLE IS SM-Handle
       * toolbar
@@ -75,7 +158,7 @@
                  LINES 25.30, SIZE 62.60, CELL HEIGHT 10, 
                  CELL WIDTH 10, COLOR IS 65793, LABEL-OFFSET 0, 
                  LINK TO THREAD, MODELESS, NO SCROLL, WITH SYSTEM MENU, 
-                 TITLE "Hacker Looons Inc.", TITLE-BAR, NO WRAP, 
+                 TITLE "Hacker Loons Inc.", TITLE-BAR, NO WRAP, 
                  EVENT PROCEDURE Main-Event-Proc, 
                  HANDLE IS Main-Handle
       * toolbar
@@ -87,10 +170,10 @@
       *    Before-Create
       * display screen
               DISPLAY Floating GRAPHICAL WINDOW
-                 LINES 48.00, SIZE 64.00, CELL HEIGHT 10, 
+                 LINES 66.80, SIZE 67.60, CELL HEIGHT 10, 
                  CELL WIDTH 10, COLOR IS 65793, LABEL-OFFSET 0, 
                  LINK TO THREAD, MODELESS, NO SCROLL, WITH SYSTEM MENU, 
-                 TITLE "Screen", TITLE-BAR, NO WRAP, 
+                 TITLE "Report", TITLE-BAR, NO WRAP, 
                  EVENT PROCEDURE Report-Event-Proc, 
                  HANDLE IS Report-Handle
       * toolbar
@@ -115,7 +198,7 @@
       * SendMail
        Acu-SendMail-Proc.
            PERFORM UNTIL Exit-Pushed
-              ACCEPT OMITTED LINE 1 COL 1  
+              ACCEPT SendMail  
                  ON EXCEPTION PERFORM Acu-SendMail-Evaluate-Func
               END-ACCEPT
            END-PERFORM
@@ -135,7 +218,7 @@
       * Report
        Acu-Report-Proc.
            PERFORM UNTIL Exit-Pushed
-              ACCEPT OMITTED LINE 1 COL 1  
+              ACCEPT Report  
                  ON EXCEPTION PERFORM Acu-Report-Evaluate-Func
               END-ACCEPT
            END-PERFORM
