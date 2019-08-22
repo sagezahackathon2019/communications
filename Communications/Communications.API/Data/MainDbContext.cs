@@ -9,9 +9,8 @@ namespace Communications.API.Data
 {
     public class MainDbContext : DbContext
     {
-        public MainDbContext(DbContextOptions<MainDbContext> options) : base (options)
+        public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)
         {
-
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -31,6 +30,13 @@ namespace Communications.API.Data
             modelBuilder.Entity<MailTask>().Property(p => p.Id).ValueGeneratedOnAdd();
 
             #endregion MailTask Configuration
+
+            #region Vendor Configuration
+
+            modelBuilder.Entity<Vendor>().HasKey(k => k.Id);
+            modelBuilder.Entity<Vendor>().Property(p => p.Id).ValueGeneratedOnAdd();
+
+            #endregion Vendor Configuration
         }
     }
 }
