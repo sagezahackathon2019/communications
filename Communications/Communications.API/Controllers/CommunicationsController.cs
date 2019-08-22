@@ -34,8 +34,6 @@
         [Route("mail/submit")]
         public IActionResult SubmitMail([FromBody] MailDto mailDto)
         {
-            _context.Database.EnsureCreated();
-
             var vendorId = HttpContext.Items.Where(x => x.Key == "VendorId").First().Value.ToString();
 
             var newMailTask = new MailTask()
