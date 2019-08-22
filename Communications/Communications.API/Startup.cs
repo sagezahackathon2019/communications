@@ -37,13 +37,11 @@ namespace Communications.API
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            var connectionString = Configuration.GetConnectionString("PrimaryConnection");
-
             services.AddHangfire(configuration => configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
-                .UseSqlServerStorage(connectionString, new SqlServerStorageOptions
+                .UseSqlServerStorage(Configuration.GetConnectionString("HangfireConnection"), new SqlServerStorageOptions
                 {
                     CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
                     SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
@@ -66,7 +64,7 @@ namespace Communications.API
 
             services.AddDbContext<MainDbContext>(options =>
             {
-                options.UseSqlServer(connectionString);
+                options.UseSqlServer(Configuration.GetConnectionString("PrimaryConnection"));
             }, optionsLifetime: ServiceLifetime.Transient);
         }
 
