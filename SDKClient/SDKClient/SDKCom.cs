@@ -9,6 +9,7 @@ using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 
+
 namespace SDKClient
 {
 	public class SDKComs
@@ -27,11 +28,26 @@ namespace SDKClient
 		{
 			try
 			{
+
 				string result = "";
+				string body = null;
+				//Which one to use????
+				MailObject mailObject = new MailObject
+				{
+					Body = Body,
+					ClientId = ClietID,
+					From = From,
+					Subject = Subject,
+					To = To.Split(';'),
+				};
+				var re = WebUtility.SendRequestJSON($"{ComsURL}/api/communications/mail/submit", "POST", VendorKey, SendRequestJSON, null);
+
 				using (var client = new WebClient())
 				{
+					
+
 					client.Headers.Add("X-Vendor-Key", VendorKey);
-					result = client.UploadString($"{ComsURL}/SendEmail", "POST", "");
+					result = client.UploadString($"{ComsURL}/api/communications/mail/submit", "POST", "");
 				}
 
 				returnValue = result;
@@ -45,7 +61,7 @@ namespace SDKClient
 			return;
 		}
 
-		public void GetEmailTaskStatus()
+		public void GetEmailTaskStatus(string id)
 		{
 			try
 			{
@@ -53,7 +69,7 @@ namespace SDKClient
 				using (var client = new WebClient())
 				{
 					client.Headers.Add("X-Vendor-Key", VendorKey);
-					result = client.UploadString($"{ComsURL}/SendEmail", "POST", "");
+					result = client.UploadString($"{ComsURL}/api/communications/mail/status/{id}", "GET", "");
 				}
 
 				returnValue = result;
@@ -75,7 +91,7 @@ namespace SDKClient
 				using (var client = new WebClient())
 				{
 					client.Headers.Add("X-Vendor-Key", VendorKey);
-					result = client.UploadString($"{ComsURL}/SendEmail", "POST", "");
+					result = client.UploadString($"{ComsURL}/api/communications/mail/status/all?vendorId={VendorKey}& clientId={ClietID}", "GET", "");
 				}
 
 				returnValue = result;
