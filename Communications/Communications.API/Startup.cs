@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Communications.API.Data;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Builder;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -37,6 +39,11 @@ namespace Communications.API
             services.AddHangfireServer();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            string connectionString = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=HackathonApi;Trusted_Connection=True;";
+
+            services.AddDbContext<MainDbContext>
+                (options => options.UseSqlServer(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +65,12 @@ namespace Communications.API
             app.UseCookiePolicy();
 
             app.UseHangfireDashboard("/hangfire");
+
+            //app.Use(async (context, next) => {
+
+            //    //IF requests for certain endpoints in certain controllers DO NOT have the X-Vendor-Key header, return an 401 - Unauthorized response
+
+            //});
 
             app.UseMvc(routes =>
             {
