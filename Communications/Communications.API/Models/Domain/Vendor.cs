@@ -14,4 +14,3 @@ namespace Communications.API.Models.Domain
         public DateTime RegisteredTimestamp { get; set; }
     }
 }
-}
