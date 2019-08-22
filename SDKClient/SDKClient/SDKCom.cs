@@ -38,18 +38,12 @@ namespace SDKClient
 					ClientId = ClietID,
 					From = From,
 					Subject = Subject,
-					To = To.Split(';'),
+					To = To.Split(';')
 				};
-				var re = WebUtility.SendRequestJSON($"{ComsURL}/api/communications/mail/submit", "POST", VendorKey, SendRequestJSON, null);
 
-				using (var client = new WebClient())
-				{
-					
+				result = WebUtility.SendRequestJSON($"{ComsURL}/api/communications/mail/submit", "POST", VendorKey, mailObject, null);
 
-					client.Headers.Add("X-Vendor-Key", VendorKey);
-					result = client.UploadString($"{ComsURL}/api/communications/mail/submit", "POST", "");
-				}
-
+				
 				returnValue = result;
 				return;
 			}
@@ -66,11 +60,7 @@ namespace SDKClient
 			try
 			{
 				string result = "";
-				using (var client = new WebClient())
-				{
-					client.Headers.Add("X-Vendor-Key", VendorKey);
-					result = client.UploadString($"{ComsURL}/api/communications/mail/status/{id}", "GET", "");
-				}
+				result = WebUtility.SendRequestJSON($"{ComsURL}/api/communications/mail/status/{id}", "GET", VendorKey, null, null);
 
 				returnValue = result;
 				return;
@@ -88,11 +78,13 @@ namespace SDKClient
 			try
 			{
 				string result = "";
-				using (var client = new WebClient())
-				{
-					client.Headers.Add("X-Vendor-Key", VendorKey);
-					result = client.UploadString($"{ComsURL}/api/communications/mail/status/all?vendorId={VendorKey}& clientId={ClietID}", "GET", "");
-				}
+				result = WebUtility.SendRequestJSON($"{ComsURL}/api/communications/mail/status/all?vendorId={VendorKey}", "GET", VendorKey, null, null);
+				//string result = "";
+				//using (var client = new WebClient())
+				//{
+				//	client.Headers.Add("X-Vendor-Key", VendorKey);
+				//	result = client.UploadString($"{ComsURL}/api/communications/mail/status/all?vendorId={VendorKey}& clientId={ClietID}", "GET", "");
+				//}
 
 				returnValue = result;
 				return;

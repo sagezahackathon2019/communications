@@ -12,7 +12,7 @@ namespace SDKClient
 {
 	class WebUtility
 	{
-		public static string SendRequestJSON(string url, string method, string contentType, Object PostData, NameValueCollection queryValues, Tuple<string, string> credential = null)
+		public static string SendRequestJSON(string url, string method, string vendorKey, Object PostData, NameValueCollection queryValues, Tuple<string, string> credential = null)
 		{
 			JsonSerializerSettings sett = new JsonSerializerSettings();
 			sett.NullValueHandling = NullValueHandling.Ignore;
@@ -51,9 +51,9 @@ namespace SDKClient
 				wc.Credentials = credentialCache;
 			}
 
-			if (!String.IsNullOrEmpty(contentType))
+			if (!String.IsNullOrEmpty(vendorKey))
 			{
-				wc.Headers.Add("Content-Type", contentType);
+				wc.Headers.Add("X-Vendor-Key", vendorKey);
 			}
 
 			if (PostData != null)
