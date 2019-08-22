@@ -20,21 +20,21 @@ namespace SDKClient
         public int Success { get; set; }
         public int RecordIndex = -1;
 
-        internal List<MailTaskStatusDTO> MailTaskList { get; set; }
+        public List<MailTaskStatusDTO> MailTaskList { get; set; }
 
-        internal class SingleResponse
+        public class SingleResponse
         {
-            internal MailTaskStatusDTO Payload { get; set; }
-            internal bool Success { get; set; }
+            public MailTaskStatusDTO Payload { get; set; }
+            public bool Success { get; set; }
         }
 
-        internal class ListResponse
+        public class ListResponse
         {
-            internal List<MailTaskStatusDTO> Payload { get; set; }
-            internal bool Success { get; set; }
+            public List<MailTaskStatusDTO> Payload { get; set; }
+            public bool Success { get; set; }
         }
 
-        internal class MailTaskStatusDTO
+        public class MailTaskStatusDTO
         {
             public string ReceivedTimestamp { get; set; }
             public string VendorId { get; set; }
@@ -43,8 +43,9 @@ namespace SDKClient
             public string TaskId { get; set; }
         }
 
-        public void GetEmailTaskStatus(string taskId, string vendorKey)
+        public void GetEmailTaskStatus(string baseUrl, string taskId, string vendorKey)
         {
+            BaseUrl = baseUrl;
             RecordIndex = -1;
             try
             {
@@ -95,8 +96,9 @@ namespace SDKClient
                 RecordIndex = -1;
         }
 
-        public void GetAllEmailTasksForClient(string vendorKey, string clientId)
+        public void GetAllEmailTasksForClient(string baseUrl, string vendorKey, string clientId)
         {
+            BaseUrl = baseUrl.Trim();
             try
             {
                 string result = WebUtility.SendRequestJSON($"{BaseUrl}/api/communications/mail/status/all?vendorId={vendorKey}&clientId={clientId}", "GET", vendorKey, null, null);
@@ -137,8 +139,9 @@ namespace SDKClient
             return;
         }
 
-        public void GetUnprocessedEmailTasksForClient(string vendorKey, string clientId)
+        public void GetUnprocessedEmailTasksForClient(string baseUrl, string vendorKey, string clientId)
         {
+            BaseUrl = baseUrl.Trim();
             try
             {
                 string result = WebUtility.SendRequestJSON($"{BaseUrl}/api/communications/mail/status/unprocessed?vendorId={vendorKey}&clientId={clientId}", "GET", vendorKey, null, null);
@@ -179,8 +182,9 @@ namespace SDKClient
             return;
         }
 
-        public void GetProcessedEmailTasksForClient(string vendorKey, string clientId)
+        public void GetProcessedEmailTasksForClient(string baseUrl, string vendorKey, string clientId)
         {
+            BaseUrl = baseUrl.Trim();
             try
             {
                 string result = WebUtility.SendRequestJSON($"{BaseUrl}/api/communications/mail/status/processed?vendorId={vendorKey}&clientId={clientId}", "GET", vendorKey, null, null);
