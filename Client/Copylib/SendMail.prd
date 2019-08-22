@@ -10,6 +10,8 @@
            ACCEPT Terminal-Abilities FROM Terminal-Info
       * set font
            PERFORM Acu-Init-Font
+      * open file
+           PERFORM Acu-Open-Files
       *    After-Init
            .
 
@@ -40,6 +42,7 @@
        Acu-Exit-Rtn.
       * destroy font
            PERFORM Acu-Exit-Font
+           PERFORM Acu-Close-Files
       *    After-Program
            EXIT PROGRAM
            STOP RUN
@@ -94,10 +97,49 @@
               DESTROY Arial9
               SET Arial9 TO NULL
            END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
            IF Courier10 NOT = NULL
               DESTROY Courier10
               SET Courier10 TO NULL
            END-IF
+           .
+
+       Acu-Open-Files.
+      *    Before-Open
+           PERFORM Acu-Open-MAILLIST
+      *    After-Open
+           .
+
+       Acu-Open-MAILLIST.
+      *    Before-Open
+           OPEN I-O MAILLIST 
+           IF MLSTAT = "35"
+              OPEN OUTPUT MAILLIST
+              IF MLSTAT(1:1) = "0"
+                 CLOSE MAILLIST
+                 OPEN I-O MAILLIST
+              END-IF
+           END-IF
+           IF NOT MLSTAT(1:1) = "0"
+              PERFORM Acu-Extended-File-Status
+              GO TO Acu-Exit-Rtn
+           END-IF
+      *    After-Open
            .
 
        Acu-SendMail-Routine.
@@ -263,6 +305,42 @@
                  END-IF
            END-EVALUATE
            MOVE 1 TO Accept-Control
+           .
+
+       Acu-Close-Files.
+      *    Before-Close
+           CLOSE MAILLIST
+      *    After-Close
+           .
+
+      * MAILLIST
+
+       Acu-MAILLIST-Read.
+           READ MAILLIST WITH NO LOCK KEY MAILKEY OF MAILLIST
+           .
+
+       Acu-MAILLIST-Read-Next.
+           READ MAILLIST NEXT WITH NO LOCK
+           .
+
+       Acu-MAILLIST-Read-Prev.
+           READ MAILLIST PREVIOUS WITH NO LOCK
+           .
+
+       Acu-MAILLIST-Rec-Write.
+           WRITE ML-REC
+           .
+
+       Acu-MAILLIST-Rec-Rewrite.
+           REWRITE ML-REC
+           .
+
+       Acu-MAILLIST-Rec-Delete.
+           DELETE MAILLIST
+           .
+
+       Acu-MAILLIST-Delete.
+           DELETE FILE MAILLIST
            .
 
        Acu-SendMail-Exit.

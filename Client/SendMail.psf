@@ -195,6 +195,27 @@ m_bFixed=1
 {{@DataItem_m_strDescriptionFDITEM16_WK
 
 @}}
+[FDITEM17_WK]
+m_nType=11
+m_strName=MLSTAT
+m_strRawPic=X(2)
+m_strPic=X(2)
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM17_WK
+
+@}}
+[FDITEM18_WK]
+m_nType=11
+m_strName=Valid-MAILLIST
+m_nItemLevel=88
+m_nSync=-1
+m_bFixed=1
+m_strTrue="00" THRU "09"
+{{@DataItem_m_strDescriptionFDITEM18_WK
+
+@}}
 
 
 [LINKAGE_SECTION]
@@ -207,6 +228,34 @@ m_bStandard=1
 
 @}}
 
+
+[DATASET_CONTENT:DS1]
+DATASET_NAME=MAILLIST
+DATA_LAYOUT=MAILLIST
+KEY=MAILKEY
+
+[SEL_LAYOUT_FILE_CONTENT:DATALAYOUT1]
+DATA_LAYOUT=MAILLIST
+DECLARATIVES=
+BEFORE_OPEN=
+AFTER_OPEN=
+BEFORE_COMMIT=
+AFTER_COMMIT=
+BEFORE_ROLLBACK=
+AFTER_ROLLBACK=
+BEFORE_DELETEFILE=
+AFTER_DELETEFILE=
+
+[SEL_LAYOUT_FILE_CONTENT:DATALAYOUT1-IO_FUNCTION_CONTENT]
+GENERATE_IO_FUNCTION1=Declaratives
+GENERATE_IO_FUNCTION2=Read File Key Is
+GENERATE_IO_FUNCTION3=Read File Next
+GENERATE_IO_FUNCTION4=Read File Previous
+GENERATE_IO_FUNCTION5=Write
+GENERATE_IO_FUNCTION6=Rewrite
+GENERATE_IO_FUNCTION7=Delete File Record
+GENERATE_IO_FUNCTION8=Delete File
+GENERATE_IO_FUNCTION9=Close File
 
 {{@SCREEN:
 *   Screen Painter Data
@@ -525,8 +574,8 @@ Begin Screen SendMail
          (Name)            = SendMail-Ef-1a
          Auto              = FALSE
          Auto Decimal      = 0
-         Autofill ID       = 538976288
-         Autofill Max Lines = 1651864352
+         Autofill ID       = 0
+         Autofill Max Lines = 0
          Border            = 3D
          Case              = Mixed
          Ccol              = 0
@@ -614,7 +663,7 @@ Begin Screen SendMail
          Layout Data Min Width Cells = 0.00
          Layout Data Min Width Pixels = 0
          Line              = 12.30
-         Lines             = 37.60
+         Lines             = 36.00
          Max Lines         = 0
          Max Text          = 0
          Max Value         = 0
@@ -634,6 +683,53 @@ Begin Screen SendMail
          Value Multiple    = FALSE
          Value Picture     = X(1000)
          Value Variable    = Scr-Body
+         Visible           = 1:TRUE
+      End
+      Begin Push-Button SendMail-Pb-1ba
+         SCREEN-COL        = 65.20
+         SCREEN-LINE       = 52.00
+         LOCK-CONTROL      = FALSE
+         (Name)            = SendMail-Pb-1ba
+         Bitmap Frame      = FALSE
+         Bitmap Number     = 1
+         Bitmap Square     = TRUE
+         Ccol              = 0
+         Cline             = 0
+         Clines            = 0
+         Color             = 0
+         Column            = 63.60
+         Copy Resource     = TRUE
+         Csize             = 0
+         Destroy Type      = Automatic
+         Enable            = 1:TRUE
+         Exception Value   = 502
+         Flat              = FALSE
+         Font              = Arial/9:0
+         Font Variable     = Arial9
+         Help ID           = 0
+         ID                = 10
+         Is Link           = FALSE
+         Layout Data       = 0
+         Layout Data Max Height Cells = 0.00
+         Layout Data Max Height Pixels = 0
+         Layout Data Max Width Cells = 0.00
+         Layout Data Max Width Pixels = 0
+         Layout Data Min Height Cells = 0.00
+         Layout Data Min Height Pixels = 0
+         Layout Data Min Width Cells = 0.00
+         Layout Data Min Width Pixels = 0
+         Line              = 49.10
+         Lines             = 2.90
+         Multiline         = FALSE
+         No Auto Default   = FALSE
+         No Tab            = FALSE
+         Self Act          = FALSE
+         Size              = 8.80
+         Style             = Other
+         Tab Order         = 7
+         Termination Value = 0
+         Title             = "Submit"
+         Transparent Color = -1
          Visible           = 1:TRUE
       End
    End
@@ -680,54 +776,7 @@ Begin Screen SendMail
       Style             = Other
       Tab Order         = 3
       Termination Value = 0
-      Title             = "Response"
-      Transparent Color = -1
-      Visible           = 1:TRUE
-   End
-   Begin Push-Button SendMail-Pb-1ba
-      SCREEN-COL        = 51.10
-      SCREEN-LINE       = 57.30
-      LOCK-CONTROL      = FALSE
-      (Name)            = SendMail-Pb-1ba
-      Bitmap Frame      = FALSE
-      Bitmap Number     = 1
-      Bitmap Square     = TRUE
-      Ccol              = 0
-      Cline             = 0
-      Clines            = 0
-      Color             = 0
-      Column            = 51.10
-      Copy Resource     = TRUE
-      Csize             = 0
-      Destroy Type      = Automatic
-      Enable            = 1:TRUE
-      Exception Value   = 502
-      Flat              = FALSE
-      Font              = Arial/9:0
-      Font Variable     = Arial9
-      Help ID           = 0
-      ID                = 10
-      Is Link           = FALSE
-      Layout Data       = 0
-      Layout Data Max Height Cells = 0.00
-      Layout Data Max Height Pixels = 0
-      Layout Data Max Width Cells = 0.00
-      Layout Data Max Width Pixels = 0
-      Layout Data Min Height Cells = 0.00
-      Layout Data Min Height Pixels = 0
-      Layout Data Min Width Cells = 0.00
-      Layout Data Min Width Pixels = 0
-      Line              = 57.30
-      Lines             = 2.90
-      Multiline         = FALSE
-      No Auto Default   = FALSE
-      No Tab            = FALSE
-      Self Act          = FALSE
-      Size              = 8.80
-      Style             = Other
-      Tab Order         = 4
-      Termination Value = 0
-      Title             = "Submit"
+      Title             = "Check Status"
       Transparent Color = -1
       Visible           = 1:TRUE
    End
@@ -799,7 +848,8 @@ Begin Screen Main
       Enable            = 1:TRUE
       Exception Value   = 27
       Flat              = FALSE
-      Font              = Default Font
+      Font              = Arial/9:0
+      Font Variable     = Arial9
       Help ID           = 0
       ID                = 4
       Is Link           = FALSE
@@ -840,7 +890,8 @@ Begin Screen Main
       Column            = 8.50
       Csize             = 0
       Destroy Type      = Automatic
-      Font              = Default Font
+      Font              = Arial/9:0
+      Font Variable     = Arial9
       Full Height       = FALSE
       Help ID           = 0
       High Color        = 0
@@ -882,7 +933,8 @@ Begin Screen Main
          Enable            = 1:TRUE
          Exception Value   = 500
          Flat              = FALSE
-         Font              = Default Font
+         Font              = Arial/9:0
+         Font Variable     = Arial9
          Help ID           = 0
          ID                = 2
          Is Link           = FALSE
@@ -928,7 +980,8 @@ Begin Screen Main
          Enable            = 1:TRUE
          Exception Value   = 501
          Flat              = FALSE
-         Font              = Default Font
+         Font              = Arial/9:0
+         Font Variable     = Arial9
          Help ID           = 0
          ID                = 3
          Is Link           = FALSE

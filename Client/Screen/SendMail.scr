@@ -29,40 +29,39 @@
            03 SendMail-Ef-1a, Entry-Field, 
               COL 13.20, LINE 11.10, LINES 2.90 CELLS, 
               SIZE 60.80 CELLS, 
-              AUTOFILL-ID 538976288, AUTOFILL-MAX-LINES 1651864352, 
               3-D, FONT IS Arial9, ID IS 7, VALUE ScrSubject.
            03 SendMail-Ef-2, Entry-Field, 
-              COL 13.20, LINE 15.20, LINES 37.60 CELLS, 
+              COL 13.20, LINE 15.20, LINES 36.00 CELLS, 
               SIZE 60.80 CELLS, 
               3-D, FONT IS Arial9, ID IS 8, MULTILINE, USE-RETURN, 
               VALUE Scr-Body.
+           03 SendMail-Pb-1ba, Push-Button, 
+              COL 65.20, LINE 52.00, LINES 2.90 CELLS, SIZE 8.80 CELLS, 
+              EXCEPTION-VALUE 502, FONT IS Arial9, ID IS 10, 
+              TITLE "Submit".
            03 SendMail-Pb-1b, Push-Button, 
               COL 60.60, LINE 57.30, LINES 2.90 CELLS, SIZE 8.80 CELLS, 
               EXCEPTION-VALUE 503, FONT IS Arial9, ID IS 9, 
-              TITLE "Response".
-           03 SendMail-Pb-1ba, Push-Button, 
-              COL 51.10, LINE 57.30, LINES 2.90 CELLS, SIZE 8.80 CELLS, 
-              EXCEPTION-VALUE 502, FONT IS Arial9, ID IS 10, 
-              TITLE "Submit".
+              TITLE "Check Status".
        01 Main.
            03 Main-Pb-2, Push-Button, 
               COL 50.70, LINE 23.00, LINES 3.00 CELLS, 
               SIZE 12.70 CELLS, 
-              EXCEPTION-VALUE 27, ID IS 4, 
+              EXCEPTION-VALUE 27, FONT IS Arial9, ID IS 4, 
               TITLE "Quit".
            03 Main-Fr-1, Frame, 
               COL 8.50, LINE 5.80, LINES 15.70 CELLS, SIZE 47.60 CELLS, 
-              ENGRAVED, ID IS 1, 
+              ENGRAVED, FONT IS Arial9, ID IS 1, 
               TITLE "Make a selection", BACKGROUND-LOW.
            03 Main-Pb-1, Push-Button, 
               COL 13.20, LINE 11.60, LINES 4.00 CELLS, 
               SIZE 16.40 CELLS, 
-              EXCEPTION-VALUE 500, ID IS 2, 
+              EXCEPTION-VALUE 500, FONT IS Arial9, ID IS 2, 
               TITLE "Send Email".
            03 Main-Pb-1a, Push-Button, 
               COL 34.90, LINE 11.60, LINES 4.00 CELLS, 
               SIZE 16.40 CELLS, 
-              EXCEPTION-VALUE 501, ID IS 3, 
+              EXCEPTION-VALUE 501, FONT IS Arial9, ID IS 3, 
               TITLE "Query Report".
        01 Report.
            03 SendMail-Pb-1a, Push-Button, 

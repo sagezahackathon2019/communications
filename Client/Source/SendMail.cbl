@@ -6,7 +6,7 @@
       *{Bench}prgid
        PROGRAM-ID. SendMail.
        AUTHOR. Edgar.Irle.
-       DATE-WRITTEN. Thursday, 22 August 2019 11:39:42.
+       DATE-WRITTEN. Thursday, 22 August 2019 12:55:17.
        REMARKS. 
       *{Bench}end
        ENVIRONMENT                 DIVISION.
@@ -20,10 +20,12 @@
        INPUT-OUTPUT                SECTION.
        FILE-CONTROL.
       *{Bench}file-control
+       COPY "MAILLIST.sl".
       *{Bench}end
        DATA                        DIVISION.
        FILE                        SECTION.
       *{Bench}file
+       COPY "MAILLIST.fd".
       *{Bench}end
        WORKING-STORAGE             SECTION.
       *{Bench}acu-def
@@ -41,12 +43,14 @@
        01  SUB                         PIC 999.
        01  WS-POINTER                  PIC 9(5).
        01  WS-LINE-VALUE               PIC X(100).
+       01  WS-MAIL-KEY                 PIC X(40).
 
        01  WS-MAIL-REC.
            05  WS-MAIL-FROM            PIC X(100).
            05  WS-MAIL-TO              PIC X(500).
            05  WS-MAIL-SUBJECT         PIC X(500).
            05  WS-MAIL-BODY            PIC X(1000).
+           05  WS-MAIL-ID              PIC X(40).
 
        01  WS-REPORT-REC.
            05  WS-REPORT-STRING        PIC X(10000).
@@ -55,7 +59,7 @@
                    15 WS-REPORT-DATE1  PIC X(20).
                    15 WS-REPORT-DATE2  PIC X(20).
                    15 WS-REPORT-COND   PIC X(20).
-                   15 FILLER           PIC X(40).
+                   15 WS-REPORT-SUBJECT PIC X(40).
 
       *{Bench}copy-working
        COPY "SendMail.wrk".
@@ -72,6 +76,22 @@
        PROCEDURE DIVISION.
       *{Bench}end
       *{Bench}declarative
+       DECLARATIVES.
+       INPUT-ERROR SECTION.
+           USE AFTER STANDARD ERROR PROCEDURE ON INPUT.
+       0100-DECL.
+           EXIT.
+       I-O-ERROR SECTION.
+           USE AFTER STANDARD ERROR PROCEDURE ON I-O.
+       0200-DECL.
+           EXIT.
+       OUTPUT-ERROR SECTION.
+           USE AFTER STANDARD ERROR PROCEDURE ON OUTPUT.
+       0300-DECL.
+           EXIT.
+       MAILLIST-ERROR SECTION.
+           USE AFTER STANDARD EXCEPTION PROCEDURE ON MAILLIST.
+       END DECLARATIVES.
       *{Bench}end
       ****************************************************************** 
        A000-MAIN SECTION.
@@ -165,6 +185,8 @@
 
            PERFORM C201-INQUIRE-MAIL-SEND.
 
+           PERFORM D100-SAVE-MAIL.
+
        B110-FINAL.
 
            PERFORM C101-DESTROY-MAIL-HANDLE.
@@ -244,11 +266,15 @@
 
            PERFORM C100-CREATE-MAIL-HANDLE.
 
+           PERFORM Z100-OPEN-MAILLIST.
+
            PERFORM C202-INQUIRE-MAIL-REPORT.
 
        B201-FINAL.
 
            PERFORM C101-DESTROY-MAIL-HANDLE.
+           
+           PERFORM Z102-CLOSE-MAILLIST.
 
 
        B201-EXIT.
@@ -351,7 +377,7 @@
            MOVE "---------"      TO WS-REPORT-COND(2).
 
            PERFORM VARYING SUB FROM 4 BY 1 UNTIL SUB > 100
-                 MOVE SPACES TO WS-LINE-VALUE
+                 MOVE SPACES TO WS-LINE-VALUE WS-MAIL-KEY
                  UNSTRING WS-REPORT-STRING DELIMITED BY "|"
                           INTO WS-LINE-VALUE
                           WITH POINTER WS-POINTER
@@ -360,6 +386,14 @@
                               INTO WS-REPORT-DATE1(SUB)
                                    WS-REPORT-DATE2(SUB)
                                    WS-REPORT-COND(SUB)
+                                   WS-MAIL-KEY
+                     MOVE WS-MAIL-KEY TO ML-MAIL-ID
+                     PERFORM Z103-READ-MAILLIST
+                     IF MLSTAT NOT = "23"
+                        MOVE "NOT FOUND" TO WS-REPORT-SUBJECT(SUB)
+                     ELSE
+                        MOVE ML-SUBJECT  TO WS-REPORT-SUBJECT(SUB)
+                     END-IF
                  ELSE
                      EXIT PERFORM
                  END-IF
@@ -394,7 +428,72 @@
       ********************************
            EXIT.
 
-      ****************************************************************** 
+      ******************************************************************
+       D100-SAVE-MAIL SECTION.
+      ********************************
+
+           PERFORM Z100-OPEN-MAILLIST.
+
+           PERFORM Z101-SAVE-MAILLIST.
+
+           PERFORM Z102-CLOSE-MAILLIST.
+       
+       D100-EXIT.
+      ********************************
+           EXIT. 
+
+      ******************************************************************
+       Z100-OPEN-MAILLIST SECTION.
+      ********************************
+
+           OPEN I-O MAILLIST.
+
+           IF MLSTAT NOT = "00"
+               OPEN OUTPUT MAILLIST
+               CLOSE MAILLIST
+               OPEN I-O MAILLIST
+           END-IF.
+
+       Z100-EXIT.
+      ********************************
+           EXIT.
+
+      ******************************************************************
+       Z101-SAVE-MAILLIST SECTION.
+      ********************************
+
+           INITIALIZE ML-REC.
+           MOVE WS-MAIL-ID TO ML-MAIL-ID.
+           MOVE WS-MAIL-TO TO ML-TO.
+           MOVE WS-MAIL-SUBJECT TO ML-SUBJECT.
+
+           WRITE ML-REC.
+
+       Z101-EXIT.
+      ********************************
+           EXIT.
+
+      ******************************************************************
+       Z102-CLOSE-MAILLIST SECTION.
+      ********************************
+
+           CLOSE MAILLIST.
+
+       Z102-EXIT.
+      ********************************
+           EXIT.
+
+      ******************************************************************
+       Z103-READ-MAILLIST SECTION.
+      ********************************
+
+           READ MAILLIST KEY IS MAILKEY.
+
+       Z103-EXIT.
+      ********************************
+           EXIT.
+
+      ******************************************************************
        TERMINATION SECTION.
       *{Bench}copy-procedure
        COPY "showmsg.cpy".

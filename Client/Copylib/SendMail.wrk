@@ -45,3 +45,5 @@
                   USAGE IS HANDLE OF FONT VALUE NULL.
        77 Courier10
                   USAGE IS HANDLE OF FONT VALUE NULL.
+       77 MLSTAT           PIC  X(2).
+           88 Valid-MAILLIST VALUE IS "00" THRU "09". 

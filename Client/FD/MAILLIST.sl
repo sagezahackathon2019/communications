@@ -1,0 +1,6 @@
+       SELECT MAILLIST
+           ASSIGN       TO  "MAILLIST"
+           ORGANIZATION IS INDEXED
+           ACCESS MODE  IS DYNAMIC
+           FILE STATUS  IS MLSTAT
+           RECORD KEY   IS MAILKEY = ML-MAIL-ID.
