@@ -10,6 +10,7 @@
     using Communications.API.Models;
     using Communications.API.Models.DTOs;
     using Communications.API.Models.Domain;
+    using Communications.API.Helpers;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -64,6 +65,8 @@
                 TaskId = newMailTask.Id.ToString(),
                 VendorId = newMailTask.VendorId.ToString()
             };
+
+            Hangfire.BackgroundJob.Enqueue<MailHelper>(x => x.ProcessMailTask(newMailTask.Id));
 
             var payload = new ResponseObject<MailTaskSubmittedResultDto>()
             {
