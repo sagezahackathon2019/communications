@@ -3,24 +3,30 @@
       * This is a generated file. DO NOT modify this file directly.
 
 
-       Acu-SendMail-Event-Extra.
+       Acu-Main-Event-Extra.
            EVALUATE Event-Type
            WHEN Msg-Close
-              PERFORM Acu-SendMail-Msg-Close
+              PERFORM Acu-Main-Msg-Close
            END-EVALUATE
            .
 
-       Acu-SendMail-Msg-Close.
+       Acu-Main-Msg-Close.
            ACCEPT Quit-Mode-Flag FROM ENVIRONMENT "QUIT_MODE"
            IF Quit-Mode-Flag = ZERO
-              PERFORM Acu-SendMail-Exit
+              PERFORM Acu-Main-Exit
               PERFORM Acu-Exit-Rtn
            END-IF
            .
 
        Screen1-Event-Proc.
+           .
+
+       Main-Event-Proc.
       * 
-           PERFORM Acu-SendMail-Event-Extra
+           PERFORM Acu-Main-Event-Extra
+           .
+
+       Report-Event-Proc.
            .
       ***   start event editor code   ***
 

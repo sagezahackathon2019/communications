@@ -1,0 +1,6 @@
+       FD  MAILLIST.
+       01 ML-REC.
+           05 ML-MAIL-KEY.
+               10 ML-MAIL-ID       PIC  X(40).
+           05 ML-TO            PIC  X(100).
+           05 ML-SUBJECT       PIC  X(100).

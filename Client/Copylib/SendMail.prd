@@ -8,13 +8,138 @@
            ACCEPT System-Information FROM System-Info
       * get terminal information
            ACCEPT Terminal-Abilities FROM Terminal-Info
+      * set font
+           PERFORM Acu-Init-Font
+      * open file
+           PERFORM Acu-Open-Files
       *    After-Init
            .
 
+       Acu-Init-Font.
+      * font setting
+           INITIALIZE WFONT-DATA Arial9
+           MOVE 9 TO WFONT-SIZE
+           MOVE "Arial" TO WFONT-NAME
+           SET WFCHARSET-DEFAULT TO TRUE
+           SET WFONT-BOLD TO FALSE
+           SET WFONT-ITALIC TO FALSE
+           SET WFONT-UNDERLINE TO FALSE
+           SET WFONT-STRIKEOUT TO FALSE
+           SET WFONT-FIXED-PITCH TO FALSE
+           CALL "W$FONT" USING WFONT-GET-FONT, Arial9, WFONT-DATA
+           INITIALIZE WFONT-DATA Courier10
+           MOVE 10 TO WFONT-SIZE
+           MOVE "Courier" TO WFONT-NAME
+           SET WFCHARSET-DEFAULT TO TRUE
+           SET WFONT-BOLD TO FALSE
+           SET WFONT-ITALIC TO FALSE
+           SET WFONT-UNDERLINE TO FALSE
+           SET WFONT-STRIKEOUT TO FALSE
+           SET WFONT-FIXED-PITCH TO TRUE
+           CALL "W$FONT" USING WFONT-GET-FONT, Courier10, WFONT-DATA
+           .
+
        Acu-Exit-Rtn.
+      * destroy font
+           PERFORM Acu-Exit-Font
+           PERFORM Acu-Close-Files
       *    After-Program
            EXIT PROGRAM
            STOP RUN
+           .
+       Acu-Exit-Font.
+      * font destroy
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Arial9 NOT = NULL
+              DESTROY Arial9
+              SET Arial9 TO NULL
+           END-IF
+           IF Courier10 NOT = NULL
+              DESTROY Courier10
+              SET Courier10 TO NULL
+           END-IF
+           .
+
+       Acu-Open-Files.
+      *    Before-Open
+           PERFORM Acu-Open-MAILLIST
+      *    After-Open
+           .
+
+       Acu-Open-MAILLIST.
+      *    Before-Open
+           OPEN I-O MAILLIST 
+           IF MLSTAT = "35"
+              OPEN OUTPUT MAILLIST
+              IF MLSTAT(1:1) = "0"
+                 CLOSE MAILLIST
+                 OPEN I-O MAILLIST
+              END-IF
+           END-IF
+           IF NOT MLSTAT(1:1) = "0"
+              PERFORM Acu-Extended-File-Status
+              GO TO Acu-Exit-Rtn
+           END-IF
+      *    After-Open
            .
 
        Acu-SendMail-Routine.
@@ -24,24 +149,77 @@
       *    After-Routine
            .
 
+       Acu-Main-Routine.
+      *    Before-Routine
+           PERFORM Acu-Main-Scrn
+           PERFORM Acu-Main-Proc
+      *    After-Routine
+           .
+
+       Acu-Report-Routine.
+      *    Before-Routine
+           PERFORM Acu-Report-Scrn
+           PERFORM Acu-Report-Proc
+      *    After-Routine
+           .
+
        Acu-SendMail-Scrn.
            PERFORM Acu-SendMail-Create-Win
            PERFORM Acu-SendMail-Init-Data
            .
 
+       Acu-Main-Scrn.
+           PERFORM Acu-Main-Create-Win
+           PERFORM Acu-Main-Init-Data
+           .
+
+       Acu-Report-Scrn.
+           PERFORM Acu-Report-Create-Win
+           PERFORM Acu-Report-Init-Data
+           .
+
        Acu-SendMail-Create-Win.
       *    Before-Create
       * display screen
-              DISPLAY Standard GRAPHICAL WINDOW
-                 LINES 48.00, SIZE 64.00, CELL HEIGHT 10, 
-                 CELL WIDTH 10, AUTO-MINIMIZE, COLOR IS 65793, 
-                 LABEL-OFFSET 0, LINK TO THREAD, MODELESS, NO SCROLL, 
-                 WITH SYSTEM MENU, 
-                 TITLE "Screen", TITLE-BAR, NO WRAP, 
+              DISPLAY Floating GRAPHICAL WINDOW
+                 LINES 59.70, SIZE 78.40, CELL HEIGHT 10, 
+                 CELL WIDTH 10, COLOR IS 65793, LABEL-OFFSET 0, 
+                 LINK TO THREAD, MODELESS, NO SCROLL, WITH SYSTEM MENU, 
+                 TITLE "Send Email", TITLE-BAR, NO WRAP, 
                  EVENT PROCEDURE Screen1-Event-Proc, 
-                 HANDLE IS Screen1-Handle
+                 HANDLE IS SM-Handle
       * toolbar
-           DISPLAY SendMail UPON Screen1-Handle
+           DISPLAY SendMail UPON SM-Handle
+      *    After-Create
+           .
+
+       Acu-Main-Create-Win.
+      *    Before-Create
+      * display screen
+              DISPLAY Standard GRAPHICAL WINDOW
+                 LINES 25.30, SIZE 62.60, CELL HEIGHT 10, 
+                 CELL WIDTH 10, COLOR IS 65793, LABEL-OFFSET 0, 
+                 LINK TO THREAD, MODELESS, NO SCROLL, WITH SYSTEM MENU, 
+                 TITLE "Hacker Loons Inc.", TITLE-BAR, NO WRAP, 
+                 EVENT PROCEDURE Main-Event-Proc, 
+                 HANDLE IS Main-Handle
+      * toolbar
+           DISPLAY Main UPON Main-Handle
+      *    After-Create
+           .
+
+       Acu-Report-Create-Win.
+      *    Before-Create
+      * display screen
+              DISPLAY Floating GRAPHICAL WINDOW
+                 LINES 66.80, SIZE 67.60, CELL HEIGHT 10, 
+                 CELL WIDTH 10, COLOR IS 65793, LABEL-OFFSET 0, 
+                 LINK TO THREAD, MODELESS, NO SCROLL, WITH SYSTEM MENU, 
+                 TITLE "Report", TITLE-BAR, NO WRAP, 
+                 EVENT PROCEDURE Report-Event-Proc, 
+                 HANDLE IS Report-Handle
+      * toolbar
+           DISPLAY Report UPON Report-Handle
       *    After-Create
            .
 
@@ -49,14 +227,44 @@
       *    Before-Initdata
       *    After-Initdata
            .
+
+       Acu-Main-Init-Data.
+      *    Before-Initdata
+      *    After-Initdata
+           .
+
+       Acu-Report-Init-Data.
+      *    Before-Initdata
+      *    After-Initdata
+           .
       * SendMail
        Acu-SendMail-Proc.
            PERFORM UNTIL Exit-Pushed
-              ACCEPT OMITTED LINE 1 COL 1  
+              ACCEPT SendMail  
                  ON EXCEPTION PERFORM Acu-SendMail-Evaluate-Func
               END-ACCEPT
            END-PERFORM
-           DESTROY Screen1-Handle
+           DESTROY SM-Handle
+           INITIALIZE Key-Status
+           .
+      * Main
+       Acu-Main-Proc.
+           PERFORM UNTIL Exit-Pushed
+              ACCEPT Main  
+                 ON EXCEPTION PERFORM Acu-Main-Evaluate-Func
+              END-ACCEPT
+           END-PERFORM
+           DESTROY Main-Handle
+           INITIALIZE Key-Status
+           .
+      * Report
+       Acu-Report-Proc.
+           PERFORM UNTIL Exit-Pushed
+              ACCEPT Report  
+                 ON EXCEPTION PERFORM Acu-Report-Evaluate-Func
+              END-ACCEPT
+           END-PERFORM
+           DESTROY Report-Handle
            INITIALIZE Key-Status
            .
 
@@ -73,7 +281,77 @@
            MOVE 1 TO Accept-Control
            .
 
+      * Main
+       Acu-Main-Evaluate-Func.
+           EVALUATE TRUE
+              WHEN Exit-Pushed
+                 PERFORM Acu-Main-Exit
+              WHEN Event-Occurred
+                 IF Event-Type = Cmd-Close
+                    PERFORM Acu-Main-Exit
+                 END-IF
+           END-EVALUATE
+           MOVE 1 TO Accept-Control
+           .
+
+      * Report
+       Acu-Report-Evaluate-Func.
+           EVALUATE TRUE
+              WHEN Exit-Pushed
+                 PERFORM Acu-Report-Exit
+              WHEN Event-Occurred
+                 IF Event-Type = Cmd-Close
+                    PERFORM Acu-Report-Exit
+                 END-IF
+           END-EVALUATE
+           MOVE 1 TO Accept-Control
+           .
+
+       Acu-Close-Files.
+      *    Before-Close
+           CLOSE MAILLIST
+      *    After-Close
+           .
+
+      * MAILLIST
+
+       Acu-MAILLIST-Read.
+           READ MAILLIST WITH NO LOCK KEY MAILKEY OF MAILLIST
+           .
+
+       Acu-MAILLIST-Read-Next.
+           READ MAILLIST NEXT WITH NO LOCK
+           .
+
+       Acu-MAILLIST-Read-Prev.
+           READ MAILLIST PREVIOUS WITH NO LOCK
+           .
+
+       Acu-MAILLIST-Rec-Write.
+           WRITE ML-REC
+           .
+
+       Acu-MAILLIST-Rec-Rewrite.
+           REWRITE ML-REC
+           .
+
+       Acu-MAILLIST-Rec-Delete.
+           DELETE MAILLIST
+           .
+
+       Acu-MAILLIST-Delete.
+           DELETE FILE MAILLIST
+           .
+
        Acu-SendMail-Exit.
+           SET Exit-Pushed TO TRUE
+           .
+
+       Acu-Main-Exit.
+           SET Exit-Pushed TO TRUE
+           .
+
+       Acu-Report-Exit.
            SET Exit-Pushed TO TRUE
            .
 

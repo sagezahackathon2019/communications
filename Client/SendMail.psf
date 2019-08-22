@@ -3,7 +3,7 @@
 
 [PROGRAM_CONTENT]
 QUIT_CONFIRM=0
-MAIN_SCREEN_NAME=SendMail
+MAIN_SCREEN_NAME=Main
 
 {{@DESCRIPTION:
 
@@ -28,6 +28,194 @@ m_bFixed=1
 {{@DataItem_m_strDescriptionFDITEM0_WK
 
 @}}
+[FDITEM1_WK]
+m_nType=10
+m_strName=SM-Handle
+m_nUsage=24
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM1_WK
+
+@}}
+[FDITEM2_WK]
+m_nType=10
+m_strName=Main-Handle
+m_nUsage=24
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM2_WK
+
+@}}
+[FDITEM3_WK]
+m_nType=10
+m_strName=Report-Handle
+m_nUsage=24
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM3_WK
+
+@}}
+[FDITEM4_WK]
+m_nType=10
+m_strName=Medium-Font
+m_nUsage=36
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM4_WK
+
+@}}
+[FDITEM5_WK]
+m_nType=10
+m_strName=Large-Font
+m_nUsage=35
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM5_WK
+
+@}}
+[FDITEM6_WK]
+m_nType=10
+m_strName=Arial9
+m_nUsage=26
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM6_WK
+
+@}}
+[FDITEM7_WK]
+m_nType=10
+m_strName=Scr-To
+m_strRawPic=X(500)
+m_strPic=X(500)
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM7_WK
+
+@}}
+[FDITEM8_WK]
+m_nType=10
+m_strName=ScrSubject
+m_strRawPic=X(500)
+m_strPic=X(500)
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM8_WK
+
+@}}
+[FDITEM9_WK]
+m_nType=10
+m_strName=Scr-Body
+m_strRawPic=X(1000)
+m_strPic=X(1000)
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM9_WK
+
+@}}
+[FDITEM10_WK]
+m_nType=10
+m_nItemLevel=1
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM10_WK
+
+@}}
+[FDITEM11_WK]
+m_strName=Scr-Report-Item
+m_strRawPic=X(10000)
+m_strPic=X(10000)
+m_nItemLevel=3
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM11_WK
+
+@}}
+[FDITEM12_WK]
+m_nType=10
+m_strName=Scr-Report
+m_strRawPic=X(100)
+m_strPic=X(100)
+m_nItemLevel=3
+m_bRedefines=1
+m_strRedefines=Scr-Report-Item
+m_nSync=-1
+m_bOccurs=1
+m_bFixed=1
+m_strRawSize=100
+m_nSize=100
+{{@DataItem_m_strDescriptionFDITEM12_WK
+
+@}}
+[FDITEM13_WK]
+m_nType=10
+m_strName=Courier-New9
+m_nUsage=26
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM13_WK
+
+@}}
+[FDITEM14_WK]
+m_nType=10
+m_strName=Courier9
+m_nUsage=26
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM14_WK
+
+@}}
+[FDITEM15_WK]
+m_nType=10
+m_strName=Goudy-Stout9
+m_nUsage=26
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM15_WK
+
+@}}
+[FDITEM16_WK]
+m_nType=10
+m_strName=Courier10
+m_nUsage=26
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM16_WK
+
+@}}
+[FDITEM17_WK]
+m_nType=11
+m_strName=MLSTAT
+m_strRawPic=X(2)
+m_strPic=X(2)
+m_nItemLevel=77
+m_nSync=-1
+m_bFixed=1
+{{@DataItem_m_strDescriptionFDITEM17_WK
+
+@}}
+[FDITEM18_WK]
+m_nType=11
+m_strName=Valid-MAILLIST
+m_nItemLevel=88
+m_nSync=-1
+m_bFixed=1
+m_strTrue="00" THRU "09"
+{{@DataItem_m_strDescriptionFDITEM18_WK
+
+@}}
 
 
 [LINKAGE_SECTION]
@@ -40,6 +228,34 @@ m_bStandard=1
 
 @}}
 
+
+[DATASET_CONTENT:DS1]
+DATASET_NAME=MAILLIST
+DATA_LAYOUT=MAILLIST
+KEY=MAILKEY
+
+[SEL_LAYOUT_FILE_CONTENT:DATALAYOUT1]
+DATA_LAYOUT=MAILLIST
+DECLARATIVES=
+BEFORE_OPEN=
+AFTER_OPEN=
+BEFORE_COMMIT=
+AFTER_COMMIT=
+BEFORE_ROLLBACK=
+AFTER_ROLLBACK=
+BEFORE_DELETEFILE=
+AFTER_DELETEFILE=
+
+[SEL_LAYOUT_FILE_CONTENT:DATALAYOUT1-IO_FUNCTION_CONTENT]
+GENERATE_IO_FUNCTION1=Declaratives
+GENERATE_IO_FUNCTION2=Read File Key Is
+GENERATE_IO_FUNCTION3=Read File Next
+GENERATE_IO_FUNCTION4=Read File Previous
+GENERATE_IO_FUNCTION5=Write
+GENERATE_IO_FUNCTION6=Rewrite
+GENERATE_IO_FUNCTION7=Delete File Record
+GENERATE_IO_FUNCTION8=Delete File
+GENERATE_IO_FUNCTION9=Close File
 
 {{@SCREEN:
 *   Screen Painter Data
@@ -56,7 +272,7 @@ Begin Screen SendMail
    Absolute Column   = 0
    Absolute Line     = 0
    Action            = (None)
-   Auto Minimize     = TRUE
+   Auto Minimize     = FALSE
    Auto Resize       = FALSE
    Bind To Thread    = FALSE
    Boxed             = FALSE
@@ -68,11 +284,11 @@ Begin Screen SendMail
    Controls Uncropped = FALSE
    Erase Screen      = FALSE
    Font              = Default Font
-   Handle Variable   = Screen1-Handle
+   Handle Variable   = SM-Handle
    Help ID           = 0
    Label Offset      = 0
    Layout Manager    = None
-   Lines             = 48.00
+   Lines             = 59.70
    Link To Thread    = TRUE
    Max Lines         = 0.00
    Max Size          = 0.00
@@ -85,9 +301,526 @@ Begin Screen SendMail
    No Close          = FALSE
    Resizable         = FALSE
    Scroll            = FALSE
-   Size              = 64.00
+   Size              = 78.40
    System Menu       = TRUE
-   Title             = "Screen"
+   Title             = "Send Email"
+   Title Bar         = TRUE
+   Unit              = Cells
+   User Gray         = FALSE
+   User White        = FALSE
+   Visible           = 1:TRUE
+   Window Type       = Floating
+   Wrap              = FALSE
+   Event Procedure   = Screen1-Event-Proc
+   Begin Push-Button SendMail-Pb-1
+      SCREEN-COL        = 70.10
+      SCREEN-LINE       = 57.30
+      LOCK-CONTROL      = FALSE
+      (Name)            = SendMail-Pb-1
+      Bitmap Frame      = FALSE
+      Bitmap Number     = 1
+      Bitmap Square     = TRUE
+      Ccol              = 0
+      Cline             = 0
+      Clines            = 0
+      Color             = 0
+      Column            = 70.10
+      Copy Resource     = TRUE
+      Csize             = 0
+      Destroy Type      = Automatic
+      Enable            = 1:TRUE
+      Exception Value   = 27
+      Flat              = FALSE
+      Font              = Arial/9:0
+      Font Variable     = Arial9
+      Help ID           = 0
+      ID                = 1
+      Is Link           = FALSE
+      Layout Data       = 0
+      Layout Data Max Height Cells = 0.00
+      Layout Data Max Height Pixels = 0
+      Layout Data Max Width Cells = 0.00
+      Layout Data Max Width Pixels = 0
+      Layout Data Min Height Cells = 0.00
+      Layout Data Min Height Pixels = 0
+      Layout Data Min Width Cells = 0.00
+      Layout Data Min Width Pixels = 0
+      Line              = 57.30
+      Lines             = 2.90
+      Multiline         = FALSE
+      No Auto Default   = FALSE
+      No Tab            = FALSE
+      Self Act          = FALSE
+      Size              = 8.80
+      Style             = Other
+      Tab Order         = 1
+      Termination Value = 0
+      Title             = "Close"
+      Transparent Color = -1
+      Visible           = 1:TRUE
+   End
+   Begin Frame SendMail-Fr-1
+      SCREEN-COL        = 2.60
+      SCREEN-LINE       = 3.90
+      LOCK-CONTROL      = FALSE
+      (Name)            = SendMail-Fr-1
+      3D Style          = Engraved
+      Alternate         = FALSE
+      Ccol              = 0
+      Cline             = 0
+      Clines            = 0
+      Color             = 0
+      Column            = 2.60
+      Csize             = 0
+      Destroy Type      = Automatic
+      Font              = Arial/9:0
+      Font Variable     = Arial9
+      Full Height       = FALSE
+      Help ID           = 0
+      High Color        = 0
+      ID                = 2
+      Layout Data       = 0
+      Layout Data Max Height Cells = 0.00
+      Layout Data Max Height Pixels = 0
+      Layout Data Max Width Cells = 0.00
+      Layout Data Max Width Pixels = 0
+      Layout Data Min Height Cells = 0.00
+      Layout Data Min Height Pixels = 0
+      Layout Data Min Width Cells = 0.00
+      Layout Data Min Width Pixels = 0
+      Line              = 3.90
+      Lines             = 52.10
+      Low Color         = 0
+      Size              = 75.20
+      Tab Order         = 2
+      Thickness         = Default
+      Title             = "Email"
+      Title Position    = 0:Unaligned
+      Visible           = 1:TRUE
+      Begin Label SendMail-La-1
+         SCREEN-COL        = 6.40
+         SCREEN-LINE       = 7.60
+         LOCK-CONTROL      = FALSE
+         (Name)            = SendMail-La-1
+         Ccol              = 0
+         Cline             = 0
+         Clines            = 0
+         Color             = 0
+         Column            = 4.80
+         Csize             = 0
+         Destroy Type      = Automatic
+         Enable            = 1:TRUE
+         Font              = Arial/9:0
+         Font Variable     = Arial9
+         Help ID           = 0
+         ID                = 3
+         Justification     = Unaligned
+         Label Offset      = 0
+         Layout Data       = 0
+         Layout Data Max Height Cells = 0.00
+         Layout Data Max Height Pixels = 0
+         Layout Data Max Width Cells = 0.00
+         Layout Data Max Width Pixels = 0
+         Layout Data Min Height Cells = 0.00
+         Layout Data Min Height Pixels = 0
+         Layout Data Min Width Cells = 0.00
+         Layout Data Min Width Pixels = 0
+         Line              = 4.70
+         Lines             = 2.00
+         No Key Letter     = FALSE
+         Size              = 5.10
+         Tab Order         = 1
+         Title             = "To"
+         Transparent       = FALSE
+         Visible           = 1:TRUE
+      End
+      Begin Label SendMail-La-1a
+         SCREEN-COL        = 6.40
+         SCREEN-LINE       = 11.40
+         LOCK-CONTROL      = FALSE
+         (Name)            = SendMail-La-1a
+         Ccol              = 0
+         Cline             = 0
+         Clines            = 0
+         Color             = 0
+         Column            = 4.80
+         Csize             = 0
+         Destroy Type      = Automatic
+         Enable            = 1:TRUE
+         Font              = Arial/9:0
+         Font Variable     = Arial9
+         Help ID           = 0
+         ID                = 4
+         Justification     = Unaligned
+         Label Offset      = 0
+         Layout Data       = 0
+         Layout Data Max Height Cells = 0.00
+         Layout Data Max Height Pixels = 0
+         Layout Data Max Width Cells = 0.00
+         Layout Data Max Width Pixels = 0
+         Layout Data Min Height Cells = 0.00
+         Layout Data Min Height Pixels = 0
+         Layout Data Min Width Cells = 0.00
+         Layout Data Min Width Pixels = 0
+         Line              = 8.50
+         Lines             = 2.00
+         No Key Letter     = FALSE
+         Size              = 5.10
+         Tab Order         = 2
+         Title             = "Subject"
+         Transparent       = FALSE
+         Visible           = 1:TRUE
+      End
+      Begin Label SendMail-La-1b
+         SCREEN-COL        = 6.40
+         SCREEN-LINE       = 15.20
+         LOCK-CONTROL      = FALSE
+         (Name)            = SendMail-La-1b
+         Ccol              = 0
+         Cline             = 0
+         Clines            = 0
+         Color             = 0
+         Column            = 4.80
+         Csize             = 0
+         Destroy Type      = Automatic
+         Enable            = 1:TRUE
+         Font              = Arial/9:0
+         Font Variable     = Arial9
+         Help ID           = 0
+         ID                = 5
+         Justification     = Unaligned
+         Label Offset      = 0
+         Layout Data       = 0
+         Layout Data Max Height Cells = 0.00
+         Layout Data Max Height Pixels = 0
+         Layout Data Max Width Cells = 0.00
+         Layout Data Max Width Pixels = 0
+         Layout Data Min Height Cells = 0.00
+         Layout Data Min Height Pixels = 0
+         Layout Data Min Width Cells = 0.00
+         Layout Data Min Width Pixels = 0
+         Line              = 12.30
+         Lines             = 2.00
+         No Key Letter     = FALSE
+         Size              = 5.10
+         Tab Order         = 3
+         Title             = "Body"
+         Transparent       = FALSE
+         Visible           = 1:TRUE
+      End
+      Begin Entry-Field SendMail-Ef-1
+         SCREEN-COL        = 13.20
+         SCREEN-LINE       = 7.00
+         LOCK-CONTROL      = FALSE
+         (Name)            = SendMail-Ef-1
+         Auto              = FALSE
+         Auto Decimal      = 0
+         Autofill ID       = 0
+         Autofill Max Lines = 0
+         Border            = 3D
+         Case              = Mixed
+         Ccol              = 0
+         Cline             = 0
+         Clines            = 0
+         Color             = 0
+         Column            = 11.60
+         Csize             = 0
+         Cursor            = 0
+         Cursor Col        = 0
+         Cursor Row        = 0
+         Destroy Type      = Automatic
+         Enable            = 1:TRUE
+         Font              = Arial/9:0
+         Font Variable     = Arial9
+         Help ID           = 0
+         ID                = 6
+         Justification     = Unaligned
+         Layout Data       = 0
+         Layout Data Max Height Cells = 0.00
+         Layout Data Max Height Pixels = 0
+         Layout Data Max Width Cells = 0.00
+         Layout Data Max Width Pixels = 0
+         Layout Data Min Height Cells = 0.00
+         Layout Data Min Height Pixels = 0
+         Layout Data Min Width Cells = 0.00
+         Layout Data Min Width Pixels = 0
+         Line              = 4.10
+         Lines             = 2.90
+         Max Lines         = 0
+         Max Text          = 0
+         Max Value         = 0
+         Min Value         = 0
+         No AutoSel        = FALSE
+         No Tab            = FALSE
+         Notify Change     = FALSE
+         Numeric           = FALSE
+         Read Only         = FALSE
+         Required          = FALSE
+         Secure            = FALSE
+         Size              = 60.80
+         Style             = Singleline
+         Tab Order         = 4
+         Use Return        = FALSE
+         Use Tab           = FALSE
+         Value Multiple    = FALSE
+         Value Picture     = X(500)
+         Value Variable    = Scr-To
+         Visible           = 1:TRUE
+      End
+      Begin Entry-Field SendMail-Ef-1a
+         SCREEN-COL        = 13.20
+         SCREEN-LINE       = 11.10
+         LOCK-CONTROL      = FALSE
+         (Name)            = SendMail-Ef-1a
+         Auto              = FALSE
+         Auto Decimal      = 0
+         Autofill ID       = 0
+         Autofill Max Lines = 0
+         Border            = 3D
+         Case              = Mixed
+         Ccol              = 0
+         Cline             = 0
+         Clines            = 0
+         Color             = 0
+         Column            = 11.60
+         Csize             = 0
+         Cursor            = 0
+         Cursor Col        = 0
+         Cursor Row        = 0
+         Destroy Type      = Automatic
+         Enable            = 1:TRUE
+         Font              = Arial/9:0
+         Font Variable     = Arial9
+         Help ID           = 0
+         ID                = 7
+         Justification     = Unaligned
+         Layout Data       = 0
+         Layout Data Max Height Cells = 0.00
+         Layout Data Max Height Pixels = 0
+         Layout Data Max Width Cells = 0.00
+         Layout Data Max Width Pixels = 0
+         Layout Data Min Height Cells = 0.00
+         Layout Data Min Height Pixels = 0
+         Layout Data Min Width Cells = 0.00
+         Layout Data Min Width Pixels = 0
+         Line              = 8.20
+         Lines             = 2.90
+         Max Lines         = 0
+         Max Text          = 0
+         Max Value         = 0
+         Min Value         = 0
+         No AutoSel        = FALSE
+         No Tab            = FALSE
+         Notify Change     = FALSE
+         Numeric           = FALSE
+         Read Only         = FALSE
+         Required          = FALSE
+         Secure            = FALSE
+         Size              = 60.80
+         Style             = Singleline
+         Tab Order         = 5
+         Use Return        = FALSE
+         Use Tab           = FALSE
+         Value Multiple    = FALSE
+         Value Picture     = X(500)
+         Value Variable    = ScrSubject
+         Visible           = 1:TRUE
+      End
+      Begin Entry-Field SendMail-Ef-2
+         SCREEN-COL        = 13.20
+         SCREEN-LINE       = 15.20
+         LOCK-CONTROL      = FALSE
+         (Name)            = SendMail-Ef-2
+         Auto              = FALSE
+         Auto Decimal      = 0
+         Autofill ID       = 0
+         Autofill Max Lines = 0
+         Border            = 3D
+         Case              = Mixed
+         Ccol              = 0
+         Cline             = 0
+         Clines            = 0
+         Color             = 0
+         Column            = 11.60
+         Csize             = 0
+         Cursor            = 0
+         Cursor Col        = 0
+         Cursor Row        = 0
+         Destroy Type      = Automatic
+         Enable            = 1:TRUE
+         Font              = Arial/9:0
+         Font Variable     = Arial9
+         Help ID           = 0
+         ID                = 8
+         Justification     = Unaligned
+         Layout Data       = 0
+         Layout Data Max Height Cells = 0.00
+         Layout Data Max Height Pixels = 0
+         Layout Data Max Width Cells = 0.00
+         Layout Data Max Width Pixels = 0
+         Layout Data Min Height Cells = 0.00
+         Layout Data Min Height Pixels = 0
+         Layout Data Min Width Cells = 0.00
+         Layout Data Min Width Pixels = 0
+         Line              = 12.30
+         Lines             = 36.00
+         Max Lines         = 0
+         Max Text          = 0
+         Max Value         = 0
+         Min Value         = 0
+         No AutoSel        = FALSE
+         No Tab            = FALSE
+         Notify Change     = FALSE
+         Numeric           = FALSE
+         Read Only         = FALSE
+         Required          = FALSE
+         Secure            = FALSE
+         Size              = 60.80
+         Style             = Multiline
+         Tab Order         = 6
+         Use Return        = TRUE
+         Use Tab           = FALSE
+         Value Multiple    = FALSE
+         Value Picture     = X(1000)
+         Value Variable    = Scr-Body
+         Visible           = 1:TRUE
+      End
+      Begin Push-Button SendMail-Pb-1ba
+         SCREEN-COL        = 65.20
+         SCREEN-LINE       = 52.00
+         LOCK-CONTROL      = FALSE
+         (Name)            = SendMail-Pb-1ba
+         Bitmap Frame      = FALSE
+         Bitmap Number     = 1
+         Bitmap Square     = TRUE
+         Ccol              = 0
+         Cline             = 0
+         Clines            = 0
+         Color             = 0
+         Column            = 63.60
+         Copy Resource     = TRUE
+         Csize             = 0
+         Destroy Type      = Automatic
+         Enable            = 1:TRUE
+         Exception Value   = 502
+         Flat              = FALSE
+         Font              = Arial/9:0
+         Font Variable     = Arial9
+         Help ID           = 0
+         ID                = 10
+         Is Link           = FALSE
+         Layout Data       = 0
+         Layout Data Max Height Cells = 0.00
+         Layout Data Max Height Pixels = 0
+         Layout Data Max Width Cells = 0.00
+         Layout Data Max Width Pixels = 0
+         Layout Data Min Height Cells = 0.00
+         Layout Data Min Height Pixels = 0
+         Layout Data Min Width Cells = 0.00
+         Layout Data Min Width Pixels = 0
+         Line              = 49.10
+         Lines             = 2.90
+         Multiline         = FALSE
+         No Auto Default   = FALSE
+         No Tab            = FALSE
+         Self Act          = FALSE
+         Size              = 8.80
+         Style             = Other
+         Tab Order         = 7
+         Termination Value = 0
+         Title             = "Submit"
+         Transparent Color = -1
+         Visible           = 1:TRUE
+      End
+   End
+   Begin Push-Button SendMail-Pb-1b
+      SCREEN-COL        = 60.60
+      SCREEN-LINE       = 57.30
+      LOCK-CONTROL      = FALSE
+      (Name)            = SendMail-Pb-1b
+      Bitmap Frame      = FALSE
+      Bitmap Number     = 1
+      Bitmap Square     = TRUE
+      Ccol              = 0
+      Cline             = 0
+      Clines            = 0
+      Color             = 0
+      Column            = 60.60
+      Copy Resource     = TRUE
+      Csize             = 0
+      Destroy Type      = Automatic
+      Enable            = 1:TRUE
+      Exception Value   = 503
+      Flat              = FALSE
+      Font              = Arial/9:0
+      Font Variable     = Arial9
+      Help ID           = 0
+      ID                = 9
+      Is Link           = FALSE
+      Layout Data       = 0
+      Layout Data Max Height Cells = 0.00
+      Layout Data Max Height Pixels = 0
+      Layout Data Max Width Cells = 0.00
+      Layout Data Max Width Pixels = 0
+      Layout Data Min Height Cells = 0.00
+      Layout Data Min Height Pixels = 0
+      Layout Data Min Width Cells = 0.00
+      Layout Data Min Width Pixels = 0
+      Line              = 57.30
+      Lines             = 2.90
+      Multiline         = FALSE
+      No Auto Default   = FALSE
+      No Tab            = FALSE
+      Self Act          = FALSE
+      Size              = 8.80
+      Style             = Other
+      Tab Order         = 3
+      Termination Value = 0
+      Title             = "Check Status"
+      Transparent Color = -1
+      Visible           = 1:TRUE
+   End
+End
+
+Begin Screen Main
+   PREFIX            = Main
+   LOCK-CONTROL      = FALSE
+   (Name)            = Main
+   Absolute Column   = 0
+   Absolute Line     = 0
+   Action            = (None)
+   Auto Minimize     = FALSE
+   Auto Resize       = FALSE
+   Bind To Thread    = FALSE
+   Boxed             = FALSE
+   Cell              = TRUE
+   Cell Height       = 10
+   Cell Measure      = Pixels
+   Cell Width        = 10
+   Color             = 65793
+   Controls Uncropped = FALSE
+   Erase Screen      = FALSE
+   Font              = Default Font
+   Handle Variable   = Main-Handle
+   Help ID           = 0
+   Label Offset      = 0
+   Layout Manager    = None
+   Lines             = 25.30
+   Link To Thread    = TRUE
+   Max Lines         = 0.00
+   Max Size          = 0.00
+   Measuring Control = Label
+   Measuring Font    = Default Font
+   Measuring Style   = [None]
+   Min Lines         = 0.00
+   Min Size          = 0.00
+   Modeless          = TRUE
+   No Close          = FALSE
+   Resizable         = FALSE
+   Scroll            = FALSE
+   Size              = 62.60
+   System Menu       = TRUE
+   Title             = "Hacker Loons Inc."
    Title Bar         = TRUE
    Unit              = Cells
    User Gray         = FALSE
@@ -95,7 +828,381 @@ Begin Screen SendMail
    Visible           = 1:TRUE
    Window Type       = Standard
    Wrap              = FALSE
-   Event Procedure   = Screen1-Event-Proc
+   Event Procedure   = Main-Event-Proc
+   Begin Push-Button Main-Pb-2
+      SCREEN-COL        = 50.70
+      SCREEN-LINE       = 23.00
+      LOCK-CONTROL      = FALSE
+      (Name)            = Main-Pb-2
+      Bitmap Frame      = FALSE
+      Bitmap Number     = 1
+      Bitmap Square     = TRUE
+      Ccol              = 0
+      Cline             = 0
+      Clines            = 0
+      Color             = 0
+      Column            = 50.70
+      Copy Resource     = TRUE
+      Csize             = 0
+      Destroy Type      = Automatic
+      Enable            = 1:TRUE
+      Exception Value   = 27
+      Flat              = FALSE
+      Font              = Arial/9:0
+      Font Variable     = Arial9
+      Help ID           = 0
+      ID                = 4
+      Is Link           = FALSE
+      Layout Data       = 0
+      Layout Data Max Height Cells = 0.00
+      Layout Data Max Height Pixels = 0
+      Layout Data Max Width Cells = 0.00
+      Layout Data Max Width Pixels = 0
+      Layout Data Min Height Cells = 0.00
+      Layout Data Min Height Pixels = 0
+      Layout Data Min Width Cells = 0.00
+      Layout Data Min Width Pixels = 0
+      Line              = 23.00
+      Lines             = 3.00
+      Multiline         = FALSE
+      No Auto Default   = FALSE
+      No Tab            = FALSE
+      Self Act          = FALSE
+      Size              = 12.70
+      Style             = Other
+      Tab Order         = 1
+      Termination Value = 0
+      Title             = "Quit"
+      Transparent Color = -1
+      Visible           = 1:TRUE
+   End
+   Begin Frame Main-Fr-1
+      SCREEN-COL        = 8.50
+      SCREEN-LINE       = 5.80
+      LOCK-CONTROL      = FALSE
+      (Name)            = Main-Fr-1
+      3D Style          = Engraved
+      Alternate         = FALSE
+      Ccol              = 0
+      Cline             = 0
+      Clines            = 0
+      Color             = 0
+      Column            = 8.50
+      Csize             = 0
+      Destroy Type      = Automatic
+      Font              = Arial/9:0
+      Font Variable     = Arial9
+      Full Height       = FALSE
+      Help ID           = 0
+      High Color        = 0
+      ID                = 1
+      Layout Data       = 0
+      Layout Data Max Height Cells = 0.00
+      Layout Data Max Height Pixels = 0
+      Layout Data Max Width Cells = 0.00
+      Layout Data Max Width Pixels = 0
+      Layout Data Min Height Cells = 0.00
+      Layout Data Min Height Pixels = 0
+      Layout Data Min Width Cells = 0.00
+      Layout Data Min Width Pixels = 0
+      Line              = 5.80
+      Lines             = 15.70
+      Low Color         = 0
+      Size              = 47.60
+      Tab Order         = 2
+      Thickness         = Default
+      Title             = "Make a selection"
+      Title Position    = 0:Unaligned
+      Visible           = 1:TRUE
+      Begin Push-Button Main-Pb-1
+         SCREEN-COL        = 13.20
+         SCREEN-LINE       = 11.60
+         LOCK-CONTROL      = FALSE
+         (Name)            = Main-Pb-1
+         Bitmap Frame      = FALSE
+         Bitmap Number     = 1
+         Bitmap Square     = TRUE
+         Ccol              = 0
+         Cline             = 0
+         Clines            = 0
+         Color             = 0
+         Column            = 5.70
+         Copy Resource     = TRUE
+         Csize             = 0
+         Destroy Type      = Automatic
+         Enable            = 1:TRUE
+         Exception Value   = 500
+         Flat              = FALSE
+         Font              = Arial/9:0
+         Font Variable     = Arial9
+         Help ID           = 0
+         ID                = 2
+         Is Link           = FALSE
+         Layout Data       = 0
+         Layout Data Max Height Cells = 0.00
+         Layout Data Max Height Pixels = 0
+         Layout Data Max Width Cells = 0.00
+         Layout Data Max Width Pixels = 0
+         Layout Data Min Height Cells = 0.00
+         Layout Data Min Height Pixels = 0
+         Layout Data Min Width Cells = 0.00
+         Layout Data Min Width Pixels = 0
+         Line              = 6.80
+         Lines             = 4.00
+         Multiline         = FALSE
+         No Auto Default   = FALSE
+         No Tab            = FALSE
+         Self Act          = FALSE
+         Size              = 16.40
+         Style             = Other
+         Tab Order         = 1
+         Termination Value = 0
+         Title             = "Send Email"
+         Transparent Color = -1
+         Visible           = 1:TRUE
+      End
+      Begin Push-Button Main-Pb-1a
+         SCREEN-COL        = 34.90
+         SCREEN-LINE       = 11.60
+         LOCK-CONTROL      = FALSE
+         (Name)            = Main-Pb-1a
+         Bitmap Frame      = FALSE
+         Bitmap Number     = 1
+         Bitmap Square     = TRUE
+         Ccol              = 0
+         Cline             = 0
+         Clines            = 0
+         Color             = 0
+         Column            = 27.40
+         Copy Resource     = TRUE
+         Csize             = 0
+         Destroy Type      = Automatic
+         Enable            = 1:TRUE
+         Exception Value   = 501
+         Flat              = FALSE
+         Font              = Arial/9:0
+         Font Variable     = Arial9
+         Help ID           = 0
+         ID                = 3
+         Is Link           = FALSE
+         Layout Data       = 0
+         Layout Data Max Height Cells = 0.00
+         Layout Data Max Height Pixels = 0
+         Layout Data Max Width Cells = 0.00
+         Layout Data Max Width Pixels = 0
+         Layout Data Min Height Cells = 0.00
+         Layout Data Min Height Pixels = 0
+         Layout Data Min Width Cells = 0.00
+         Layout Data Min Width Pixels = 0
+         Line              = 6.80
+         Lines             = 4.00
+         Multiline         = FALSE
+         No Auto Default   = FALSE
+         No Tab            = FALSE
+         Self Act          = FALSE
+         Size              = 16.40
+         Style             = Other
+         Tab Order         = 2
+         Termination Value = 0
+         Title             = "Query Report"
+         Transparent Color = -1
+         Visible           = 1:TRUE
+      End
+   End
+End
+
+Begin Screen Report
+   PREFIX            = Report
+   LOCK-CONTROL      = FALSE
+   (Name)            = Report
+   Absolute Column   = 0
+   Absolute Line     = 0
+   Action            = (None)
+   Auto Minimize     = FALSE
+   Auto Resize       = FALSE
+   Bind To Thread    = FALSE
+   Boxed             = FALSE
+   Cell              = TRUE
+   Cell Height       = 10
+   Cell Measure      = Pixels
+   Cell Width        = 10
+   Color             = 65793
+   Controls Uncropped = FALSE
+   Erase Screen      = FALSE
+   Font              = Default Font
+   Handle Variable   = Report-Handle
+   Help ID           = 0
+   Label Offset      = 0
+   Layout Manager    = None
+   Lines             = 66.80
+   Link To Thread    = TRUE
+   Max Lines         = 0.00
+   Max Size          = 0.00
+   Measuring Control = Label
+   Measuring Font    = Default Font
+   Measuring Style   = [None]
+   Min Lines         = 0.00
+   Min Size          = 0.00
+   Modeless          = TRUE
+   No Close          = FALSE
+   Resizable         = FALSE
+   Scroll            = FALSE
+   Size              = 67.60
+   System Menu       = TRUE
+   Title             = "Report"
+   Title Bar         = TRUE
+   Unit              = Cells
+   User Gray         = FALSE
+   User White        = FALSE
+   Visible           = 1:TRUE
+   Window Type       = Floating
+   Wrap              = FALSE
+   Event Procedure   = Report-Event-Proc
+   Begin Push-Button SendMail-Pb-1a
+      SCREEN-COL        = 58.90
+      SCREEN-LINE       = 64.10
+      LOCK-CONTROL      = FALSE
+      (Name)            = SendMail-Pb-1a
+      Bitmap Frame      = FALSE
+      Bitmap Number     = 1
+      Bitmap Square     = TRUE
+      Ccol              = 0
+      Cline             = 0
+      Clines            = 0
+      Color             = 0
+      Column            = 58.90
+      Copy Resource     = TRUE
+      Csize             = 0
+      Destroy Type      = Automatic
+      Enable            = 1:TRUE
+      Exception Value   = 27
+      Flat              = FALSE
+      Font              = Arial/9:0
+      Font Variable     = Arial9
+      Help ID           = 0
+      ID                = 1
+      Is Link           = FALSE
+      Layout Data       = 0
+      Layout Data Max Height Cells = 0.00
+      Layout Data Max Height Pixels = 0
+      Layout Data Max Width Cells = 0.00
+      Layout Data Max Width Pixels = 0
+      Layout Data Min Height Cells = 0.00
+      Layout Data Min Height Pixels = 0
+      Layout Data Min Width Cells = 0.00
+      Layout Data Min Width Pixels = 0
+      Line              = 64.10
+      Lines             = 2.90
+      Multiline         = FALSE
+      No Auto Default   = FALSE
+      No Tab            = FALSE
+      Self Act          = FALSE
+      Size              = 8.80
+      Style             = Other
+      Tab Order         = 1
+      Termination Value = 0
+      Title             = "Close"
+      Transparent Color = -1
+      Visible           = 1:TRUE
+   End
+   Begin Frame Report-Fr-1
+      SCREEN-COL        = 1.80
+      SCREEN-LINE       = 2.10
+      LOCK-CONTROL      = FALSE
+      (Name)            = Report-Fr-1
+      3D Style          = Engraved
+      Alternate         = FALSE
+      Ccol              = 0
+      Cline             = 0
+      Clines            = 0
+      Color             = 0
+      Column            = 1.80
+      Csize             = 0
+      Destroy Type      = Automatic
+      Font              = Arial/9:0
+      Font Variable     = Arial9
+      Full Height       = FALSE
+      Help ID           = 0
+      High Color        = 0
+      ID                = 2
+      Layout Data       = 0
+      Layout Data Max Height Cells = 0.00
+      Layout Data Max Height Pixels = 0
+      Layout Data Max Width Cells = 0.00
+      Layout Data Max Width Pixels = 0
+      Layout Data Min Height Cells = 0.00
+      Layout Data Min Height Pixels = 0
+      Layout Data Min Width Cells = 0.00
+      Layout Data Min Width Pixels = 0
+      Line              = 2.10
+      Lines             = 61.20
+      Low Color         = 0
+      Size              = 65.90
+      Tab Order         = 2
+      Thickness         = Default
+      Title             = "Report Results"
+      Title Position    = 0:Unaligned
+      Visible           = 1:TRUE
+      Begin Entry-Field Report-Ef-1
+         SCREEN-COL        = 3.20
+         SCREEN-LINE       = 3.90
+         LOCK-CONTROL      = FALSE
+         (Name)            = Report-Ef-1
+         Auto              = FALSE
+         Auto Decimal      = 0
+         Autofill ID       = 0
+         Autofill Max Lines = 0
+         Border            = 3D
+         Case              = Mixed
+         Ccol              = 0
+         Cline             = 0
+         Clines            = 0
+         Color             = 0
+         Column            = 2.40
+         Csize             = 0
+         Cursor            = 0
+         Cursor Col        = 0
+         Cursor Row        = 0
+         Destroy Type      = Automatic
+         Enable            = 1:TRUE
+         Font              = Courier/10:0
+         Font Variable     = Courier10
+         Help ID           = 0
+         ID                = 3
+         Justification     = Unaligned
+         Layout Data       = 0
+         Layout Data Max Height Cells = 0.00
+         Layout Data Max Height Pixels = 0
+         Layout Data Max Width Cells = 0.00
+         Layout Data Max Width Pixels = 0
+         Layout Data Min Height Cells = 0.00
+         Layout Data Min Height Pixels = 0
+         Layout Data Min Width Cells = 0.00
+         Layout Data Min Width Pixels = 0
+         Line              = 2.80
+         Lines             = 58.10
+         Max Lines         = 0
+         Max Text          = 0
+         Max Value         = 0
+         Min Value         = 0
+         No AutoSel        = FALSE
+         No Tab            = FALSE
+         Notify Change     = FALSE
+         Numeric           = FALSE
+         Read Only         = FALSE
+         Required          = FALSE
+         Secure            = TRUE
+         Size              = 63.10
+         Style             = Vscroll Bar
+         Tab Order         = 1
+         Use Return        = FALSE
+         Use Tab           = FALSE
+         Value Multiple    = TRUE
+         Value Picture     = X(100)
+         Value Variable    = Scr-Report
+         Visible           = 1:TRUE
+      End
+   End
 End
 
 END-SPDATA
@@ -140,6 +1247,22 @@ VALUE=97
 CONDITION=Screen-Time-Out
 VALUE=99
 
+[KEYSTATUS_CONTENT:KS6]
+CONDITION=sendmail-pushed
+VALUE=500
+
+[KEYSTATUS_CONTENT:KS7]
+CONDITION=queryreport-pushed
+VALUE=501
+
+[KEYSTATUS_CONTENT:KS8]
+CONDITION=submit-pushed
+VALUE=502
+
+[KEYSTATUS_CONTENT:KS9]
+CONDITION=response-pushed
+VALUE=503
+
 [CODE_GENERATION_OPTIONS]
 FOLLOW_PROJECT_OPTIONS=1
 GENERATE_PROGRAM_FILE=1
@@ -149,7 +1272,7 @@ GENERATE_SCREEN_SECTION=1
 GENERATE_REPORT_SECTION=1
 GENERATE_PROCEDURE_DIVISION=1
 GENERATE_MENU_PARAGRAPH=1
-GENERATE_LINKAGE_SECTION=1
+GENERATE_LINKAGE_SECTION=0
 REPLACE_REMARK_PART=1
 EXCLUDE_PROGRAM_VARIABLE=1
 EXCLUDE_PROGRAM_PARAGRAPH=1
