@@ -64,11 +64,11 @@ namespace Communications.API
             services.AddHangfireServer(x => x.ServerName = "Server 3");
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            
 
-            services.AddDbContext<MainDbContext>(options => {
+            services.AddDbContext<MainDbContext>(options =>
+            {
                 options.UseSqlServer(connectionString);
-            });
+            }, optionsLifetime: ServiceLifetime.Transient);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -127,7 +127,6 @@ namespace Communications.API
                                 await context.Response.WriteAsync("No Vendor with the key provided exists. Unauthorized.");
                             }
                         }
-                        
                     }
                     else
                     {
@@ -139,7 +138,6 @@ namespace Communications.API
                 {
                     await next.Invoke();
                 }
-                
             });
 
             app.UseMvc(routes =>
@@ -148,6 +146,20 @@ namespace Communications.API
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            CustomInitializer.Initialize(app.ApplicationServices);
+        }
+    }
+
+
+    public class CustomInitializer
+    {
+        public static void Initialize(IServiceProvider serviceProvider)
+        {
+            using (var context = new MainDbContext(serviceProvider.GetRequiredService<DbContextOptions<MainDbContext>>()))
+            {
+                context.Database.EnsureCreated();
+            }
         }
     }
 }
