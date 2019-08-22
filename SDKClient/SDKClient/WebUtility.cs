@@ -3,70 +3,88 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
 namespace SDKClient
 {
-	class WebUtility
-	{
-		public static string SendRequestJSON(string url, string method, string vendorKey, Object PostData, NameValueCollection queryValues, Tuple<string, string> credential = null)
-		{
-			JsonSerializerSettings sett = new JsonSerializerSettings();
-			sett.NullValueHandling = NullValueHandling.Ignore;
-			sett.DateFormatHandling = DateFormatHandling.MicrosoftDateFormat;
+    internal static class WebUtility
+    {
+        private static Dictionary<string, HttpMethod> httpMethods = new Dictionary<string, HttpMethod>()
+        {
+            { "GET", HttpMethod.Get },
+            { "POST", HttpMethod.Post },
+            { "PUT", HttpMethod.Put },
+            { "DELETE", HttpMethod.Delete },
+            { "HEAD", HttpMethod.Head }
+        };
 
-			string body = null;
-			byte[] bodyBytes = null;
+        internal static string SendRequestJSON(string url, string httpMethod, string vendorKey, object postData, NameValueCollection queryValues, Tuple<string, string> credential = null)
+        {
+            HttpMethod method = httpMethods.Keys.Contains(httpMethod) ? httpMethods[httpMethod] : null;
 
-			if (queryValues != null)
-			{
-				if (queryValues.Count > 0)
-				{
-					url = string.Concat(url, "?");
-					foreach (string name in queryValues)
-					{
-						url = string.Concat(url, name, "=", HttpUtility.UrlEncode(queryValues[name]), "&");
-					}
+            if (method == null)
+            {
+                throw new ArgumentException("Invalid value", nameof(httpMethod));
+            }
 
-					url = url.TrimEnd('&');
-				}
-			}
+            if (!Guid.TryParse(vendorKey, out _))
+            {
+                throw new ArgumentException("Invalid value", nameof(vendorKey));
+            }
 
-			WebClient wc = new WebClient();
+            if (queryValues != null)
+            {
+                BuildQueryUrl(url, queryValues);
+            }
 
-			if (credential != null)
-			{
-				Uri uri = new Uri(url);
+            JsonSerializerSettings sett = new JsonSerializerSettings();
+            sett.NullValueHandling = NullValueHandling.Ignore;
+            sett.DateFormatHandling = DateFormatHandling.MicrosoftDateFormat;
 
-				var credentialCache = new CredentialCache();
-				credentialCache.Add(
-				  new Uri(uri.GetLeftPart(UriPartial.Authority)), // request url's host
-				  "Basic",  // authentication type 
-				  new NetworkCredential(credential.Item1, credential.Item2) // credentials 
-				);
+            Uri endpoint = new Uri(url);
 
-				wc.Credentials = credentialCache;
-			}
+            using (var httpClient = new HttpClient())
+            {
+                var request = new HttpRequestMessage(method, endpoint);
+                request.Headers.Accept.Clear();
+                if (!string.IsNullOrEmpty(vendorKey))
+                    request.Headers.Add("X-Vendor-Key", vendorKey);
 
-			if (!String.IsNullOrEmpty(vendorKey))
-			{
-				wc.Headers.Add("X-Vendor-Key", vendorKey);
-			}
+                if (postData != null)
+                {
+                    string body = JsonConvert.SerializeObject(postData, sett);
+                    request.Content = new StringContent(body, Encoding.UTF8, "application/json");
+                }
 
-			if (PostData != null)
-				body = JsonConvert.SerializeObject(PostData, sett);
+                HttpResponseMessage response = httpClient.SendAsync(request).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    return response.Content.ReadAsStringAsync().Result;
+                }
+                else
+                {
+                    throw new Exception($"{response.StatusCode}: {response.ReasonPhrase}");
+                }
+            }
+        }
 
-			if (!string.IsNullOrEmpty(body))
-			{
-				bodyBytes = Encoding.UTF8.GetBytes(body);
-				bodyBytes = wc.UploadData(url, method, bodyBytes);
-			}
-			else
-				bodyBytes = wc.DownloadData(url);
-			return Encoding.UTF8.GetString(bodyBytes);
-		}
-	}
+        private static string BuildQueryUrl(string url, NameValueCollection queryValues)
+        {
+            if (queryValues.Count > 0)
+            {
+                url = string.Concat(url, "?");
+                foreach (string name in queryValues)
+                {
+                    url = string.Concat(url, name, "=", HttpUtility.UrlEncode(queryValues[name]), "&");
+                }
+
+                url = url.TrimEnd('&');
+            }
+            return url;
+        }
+    }
 }
